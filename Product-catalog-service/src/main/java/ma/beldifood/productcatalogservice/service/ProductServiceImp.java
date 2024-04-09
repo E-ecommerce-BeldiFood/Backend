@@ -1,18 +1,15 @@
 package ma.beldifood.productcatalogservice.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductDtoRequest;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.entity.Product;
 import ma.beldifood.productcatalogservice.repository.ProductRepository;
 import ma.beldifood.productcatalogservice.utils.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +20,16 @@ public class ProductServiceImp implements ProductService{
 
     private final FirebaseStorageService firebaseStorageService; // Assume a service for interacting with Firebase Storage
 
-    public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile image) {
+    public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile fileName) {
         Product product = Mapping.mapToProduct(productDtoRequest);
 
+            String fileName = multipartFile.getOriginalFilename();                        // to get original file name
+            fileName = UUID.randomUUID().toString().concat(this.getExtension(fileName));  // to generated random string values for file name.
 
+            File file = this.convertToFile(multipartFile, fileName);                      // to convert multipartFile to File
+            String URL = this.uploadFile(file, fileName);                                   // to get uploaded file link
+            file.delete();
+            return URL;
 
 
 

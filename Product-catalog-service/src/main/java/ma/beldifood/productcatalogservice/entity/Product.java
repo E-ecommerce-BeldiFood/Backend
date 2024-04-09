@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long productId;
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -34,14 +34,24 @@ public class Product {
     @NotBlank(message = "Image URL is required")
     private String imageUrl;
 
+    @NotNull(message = "time is required")
+    private double timeToPrepareInMinute;
+
+
+    private boolean availability = true;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+
+    private int positiveFeedback=0;
+
+    private int negativeFeedback=0;
+
     @ManyToOne
-    @JoinColumn(name = "subcategory_id", nullable = false)
     private Subcategory subcategory;
 
 }

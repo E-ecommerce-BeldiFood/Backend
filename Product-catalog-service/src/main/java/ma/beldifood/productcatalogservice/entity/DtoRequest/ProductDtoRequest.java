@@ -22,7 +22,13 @@ public class ProductDtoRequest {
     @NotBlank(message = "Image URL is required")
     private String imageUrl;
 
+    @NotNull(message = "time is required")
+    private double timeToPrepareInMinute;
+
+    private boolean availability = true;
+
     @NotNull(message = "Subcategory ID is required")
     @NotNull
     private Long subcategoryId;
+
 }

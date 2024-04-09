@@ -1,11 +1,10 @@
 package ma.beldifood.productcatalogservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+
+import java.util.List;
 
 
 @Entity
@@ -13,10 +12,11 @@ import lombok.Data;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long categoryId;
 
     @NotBlank
     private String name;
 
-    // Constructors, getters, setters
+    @OneToMany(mappedBy = "category")
+    private List<Subcategory> subcategories;
 }

@@ -7,12 +7,14 @@ import java.time.LocalDateTime;
 
 @Data
 public class ProductDtoResponse {
-    private Long id;
+    private Long productId;
     private String name;
     private BigDecimal price;
     private String description;
     private String imageUrl;
-    private Long subcategoryId;
+    private String subcategory_name;
+    private double timeToPrepareInMinute;
+    private boolean availability ;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
