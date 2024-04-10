@@ -1,8 +1,9 @@
-package com.example.Orders.entities;
+package com.example.Orders.enums;
 
 public enum OrderStatus {
     PENDING,
-    CONFIRMED,
+    Processing,
+    Completed,
     SHIPPED,
     DELIVERED,
     CANCELLED

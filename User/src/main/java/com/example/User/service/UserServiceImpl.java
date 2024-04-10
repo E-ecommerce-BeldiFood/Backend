@@ -1,12 +1,12 @@
 package com.example.User.service;
 
 import com.example.User.entities.User;
-import com.example.User.entities.dto.UserRequestDto;
-import com.example.User.entities.dto.UserResponseDto;
+import com.example.User.dto.UserRequestDto;
+import com.example.User.dto.UserResponseDto;
 import com.example.User.exception.EmailAlreadyExistsException;
 import com.example.User.exception.EmptyEntityException;
 import com.example.User.repository.UserRepository;
-import com.example.User.utils.Mapping;
+import com.example.User.mappers.Mapping;
 import com.example.User.utils.UserInputValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -50,11 +48,21 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDto createUser(UserRequestDto userDto) throws EmailAlreadyExistsException {
-        // Validate email and password
+        log.info("Creating new user with email : {}", userDto.getEmail());
+
+        if (!UserInputValidation.isValidUsername(userDto.getUsername())) {
+            throw new IllegalArgumentException("Username is required");
+        }
+        if (!UserInputValidation.isValidFirstName(userDto.getFirstname())) {
+            throw new IllegalArgumentException("FirstName is required");
+        }
+        if (!UserInputValidation.isValidLastName(userDto.getLastname())) {
+            throw new IllegalArgumentException("LastName is required");
+        }
         if (!UserInputValidation.isValidEmail(userDto.getEmail())) {
             throw new IllegalArgumentException("Invalid email format");
         }
-        if (!userInputValidation.isValidPassword(userDto.getPassword())) {
+        if (!UserInputValidation.isValidPassword(userDto.getPassword())) {
             throw new IllegalArgumentException("Invalid password format");
         }
         // Check if email already exists
@@ -68,14 +76,26 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDto getUserByUserName(String userName) throws EntityNotFoundException {
+        log.info("Fetching user by username: {}", userName);
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + userName));
+        return Mapping.mapToUserResponseDto(user);
+    }
+    @Override
+    public UserResponseDto getUserByEmail(String email) throws EntityNotFoundException {
+        log.info("Fetching user by email: {}", email);
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
         return Mapping.mapToUserResponseDto(user);
     }
 
 
     @Override
     public void deleteUserById(Long id) throws EntityNotFoundException, EmptyEntityException{
+        log.info("delete user by id : {}", id);
+        if (!userRepository.existsById(id)) {
+            throw new EntityNotFoundException("User not found with id: " + id);
+        }
         userRepository.deleteById(id);
 
     }
@@ -86,7 +106,7 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getId()));
 
 
-        user.setUserName(userDto.getUserName());
+        user.setUserName(userDto.getUsername());
         user.setEmail(userDto.getEmail());
 
         User updatedUser = userRepository.save(user);

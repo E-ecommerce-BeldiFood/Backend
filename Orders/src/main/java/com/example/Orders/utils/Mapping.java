@@ -13,7 +13,7 @@ public class Mapping {
     private static final ModelMapper modelMapper = new ModelMapper();
     public static Order mapToOrderEntity(OrderRequestDto orderRequestDto) {
         Order order = modelMapper.map(orderRequestDto, Order.class);
-        order.setItems(orderRequestDto.getItems().stream()
+        order.setOrderItems(orderRequestDto.getOrderItems().stream()
                 .map(Mapping::mapToOrderItemEntity)
                 .collect(Collectors.toList()));
         return order;
@@ -23,7 +23,7 @@ public class Mapping {
     }
     public static OrderResponseDto mapToOrderResponseDto(Order order) {
         OrderResponseDto orderResponseDto = modelMapper.map(order, OrderResponseDto.class);
-        orderResponseDto.setItems(order.getItems().stream()
+        orderResponseDto.setOrderItems(order.getOrderItems().stream()
                 .map(Mapping::mapToOrderItemDto)
                 .collect(Collectors.toList()));
         return orderResponseDto;

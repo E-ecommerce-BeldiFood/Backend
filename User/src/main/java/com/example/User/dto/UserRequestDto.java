@@ -1,4 +1,4 @@
-package com.example.User.entities.dto;
+package com.example.User.dto;
 
 import com.example.User.entities.Role;
 import lombok.AllArgsConstructor;
@@ -10,9 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserResponseDto {
+public class UserRequestDto {
     private Long id;
-    private String userName;
+    private String firstname;
+    private String lastname;
+    private String username;
     private String email;
+    private String password;
     private Role role;
 }

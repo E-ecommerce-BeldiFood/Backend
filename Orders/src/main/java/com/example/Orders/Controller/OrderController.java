@@ -3,6 +3,7 @@ package com.example.Orders.Controller;
 import com.example.Orders.dto.OrderRequestDto;
 import com.example.Orders.dto.OrderResponseDto;
 import com.example.Orders.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,33 +17,34 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
+
     @PostMapping
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
-        OrderResponseDto createdOrder = orderService.createOrder(orderRequestDto);
-        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+    public ResponseEntity<OrderResponseDto> addOrder(@Valid @RequestBody OrderRequestDto orderRequestDto) {
+        OrderResponseDto responseDto = orderService.addOrder(orderRequestDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable Long id) {
-        OrderResponseDto orderResponseDto = orderService.getOrderById(id);
-        return ResponseEntity.ok(orderResponseDto);
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable Long orderId) {
+        OrderResponseDto responseDto = orderService.getOrderById(orderId);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
-        List<OrderResponseDto> orderResponseDtos = orderService.getAllOrders();
-        return ResponseEntity.ok(orderResponseDtos);
+        List<OrderResponseDto> responseDtoList = orderService.getAllOrders();
+        return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long id, @RequestBody OrderRequestDto orderRequestDto) {
-        OrderResponseDto updatedOrder = orderService.updateOrder(id, orderRequestDto);
-        return ResponseEntity.ok(updatedOrder);
+    @PutMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long orderId, @Valid @RequestBody OrderRequestDto orderRequestDto) {
+        OrderResponseDto responseDto = orderService.updateOrder(orderId, orderRequestDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+        orderService.deleteOrder(orderId);
         return ResponseEntity.noContent().build();
     }
 

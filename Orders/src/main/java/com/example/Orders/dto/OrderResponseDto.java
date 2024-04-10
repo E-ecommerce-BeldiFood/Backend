@@ -1,12 +1,17 @@
 package com.example.Orders.dto;
 
-import com.example.Orders.entities.OrderStatus;
+import com.example.Orders.enums.OrderStatus;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,10 +19,13 @@ import java.util.List;
 @Setter
 @Getter
 public class OrderResponseDto {
-    private Long id;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private List<OrderItemDto> items;
+    private Long orderId;
+    private String customerId;
+    private Date createdAt;
+    private Date updatedAt;
+    private List<OrderItemDto> orderItems;
+    private BigDecimal totalPrice;
+    private Integer quantity;
     private OrderStatus status;
 
 

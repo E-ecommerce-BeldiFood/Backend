@@ -1,8 +1,8 @@
-package com.example.User.utils;
+package com.example.User.mappers;
 
 import com.example.User.entities.User;
-import com.example.User.entities.dto.UserRequestDto;
-import com.example.User.entities.dto.UserResponseDto;
+import com.example.User.dto.UserRequestDto;
+import com.example.User.dto.UserResponseDto;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 

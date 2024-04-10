@@ -1,11 +1,12 @@
 package com.example.Orders.dto;
 
-import com.example.Orders.entities.OrderStatus;
+import com.example.Orders.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,6 +14,8 @@ import java.util.List;
 @Setter
 @Getter
 public class OrderRequestDto {
-    private List<OrderItemDto> items;
+    private String customerId;
+    private List<OrderItemDto> orderItems;
+    private BigDecimal totalPrice;
     private OrderStatus status;
 }

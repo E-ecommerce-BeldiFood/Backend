@@ -1,21 +1,27 @@
 package com.example.User.utils;
 
-import com.example.User.entities.dto.UserRequestDto;
-import org.modelmapper.spi.ErrorMessage;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import static java.util.Objects.isNull;
 @Component
 public class UserInputValidation {
+    public static Boolean isValidUsername(String userName) {
+        return userName != null && !userName.isEmpty();
+    }
+
+    public static Boolean isValidFirstName(String firstName) {
+        return firstName != null && !firstName.isEmpty();
+    }
+
+    public static Boolean isValidLastName(String lastName) {
+        return lastName != null && !lastName.isEmpty();
+    }
+
     public static Boolean isValidEmail(String email) {
         // Regular expression pattern for email validation
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
+
 
 
     //Minimum length of 8 characters.

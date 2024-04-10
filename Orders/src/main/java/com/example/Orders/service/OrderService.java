@@ -6,10 +6,18 @@ import com.example.Orders.dto.OrderResponseDto;
 import java.util.List;
 
 public interface OrderService {
+    boolean isOrderIdExists(Long orderId);
 
-    OrderResponseDto createOrder(OrderRequestDto orderRequestDto);
-    OrderResponseDto getOrderById(Long id);
+    OrderResponseDto addOrder(OrderRequestDto orderRequestDto);
+
+    OrderResponseDto getOrderById(Long orderId);
+
     List<OrderResponseDto> getAllOrders();
-    OrderResponseDto updateOrder(Long id, OrderRequestDto orderRequestDto);
-    void deleteOrder(Long id);
+
+    OrderResponseDto updateOrder(Long orderId, OrderRequestDto orderRequestDto);
+
+    void deleteOrder(Long orderId);
+
+    // Stock Management Methods
+
 }
