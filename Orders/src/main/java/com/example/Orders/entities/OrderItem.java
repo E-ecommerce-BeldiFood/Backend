@@ -1,11 +1,11 @@
 package com.example.Orders.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
 
@@ -24,14 +24,14 @@ public class OrderItem {
  @JoinColumn(name = "order_id")
  private Order order;
 
- @NotNull
+ @NotNull(message = "Product ID is required")
  @Column(name = "product_id")
  private Long productId;//modif
  @Column(name = "product_name")
  private String productName;
  @Column(name = "quantity")
  private int quantity;
- @NotNull
- @Column(name="price")
- private BigDecimal price;
+ @NotNull(message = "Unit price is required")
+ @Column(name="unitPrice")
+ private BigDecimal unitPrice;
 }

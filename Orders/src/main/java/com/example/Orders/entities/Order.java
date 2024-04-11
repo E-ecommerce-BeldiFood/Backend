@@ -2,16 +2,15 @@ package com.example.Orders.entities;
 
 import com.example.Orders.enums.OrderStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
-    @NotNull
+    @NotNull(message = "Customer ID is required")
     @Column(name = "customer_id")
     private Long customerId;
     @CreationTimestamp
@@ -35,9 +34,8 @@ public class Order {
     @UpdateTimestamp
     private Date updatedAt;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="order_id")
     private List<OrderItem> orderItems;
-    @NotNull
+    @NotNull(message = "Total price is required")
     @Column(name="total_price")
     private BigDecimal totalPrice;
     @Column(name="status")

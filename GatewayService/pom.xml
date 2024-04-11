@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ma.boudra</groupId>
-	<artifactId>gatway-service</artifactId>
+	<artifactId>Gatway-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gatway-service</name>
 	<description>gatway-service</description>

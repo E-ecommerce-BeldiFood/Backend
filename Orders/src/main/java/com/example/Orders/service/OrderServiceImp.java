@@ -24,10 +24,7 @@ public class OrderServiceImp implements OrderService{
     private final OrderRepository orderRepository;
 
 
-    @Override
-    public boolean isOrderIdExists(Long orderId){
-        return orderRepository.existsById(orderId);
-    }
+
     @Override
     public OrderResponseDto addOrder(@Valid OrderRequestDto orderRequestDto) {
         Order order = Mapping.mapToOrderEntity(orderRequestDto);
@@ -40,6 +37,16 @@ public class OrderServiceImp implements OrderService{
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + orderId));
         return Mapping.mapToOrderResponseDto(order);
+    }
+    @Override
+    public List<OrderResponseDto> getOrderByName(String productName){
+        List<Order> orders = orderRepository.findByOrderItems_ProductNameContaining(productName);
+        if (orders.isEmpty()) {
+            throw new OrderNotFoundException("No orders found with product name: " + productName);
+        }
+        return orders.stream()
+                .map(Mapping::mapToOrderResponseDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -70,4 +77,5 @@ public class OrderServiceImp implements OrderService{
         }
         orderRepository.deleteById(orderId);
     }
+
 }

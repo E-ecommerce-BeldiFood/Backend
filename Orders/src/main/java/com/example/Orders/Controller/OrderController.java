@@ -47,6 +47,11 @@ public class OrderController {
         orderService.deleteOrder(orderId);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<OrderResponseDto>> getOrderByProductName(@RequestParam("productName") String productName) {
+        List<OrderResponseDto> responseDtoList = orderService.getOrderByName(productName);
+        return ResponseEntity.ok(responseDtoList);
+    }
 
 
 }
