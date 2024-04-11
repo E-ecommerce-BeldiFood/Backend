@@ -2,6 +2,7 @@ package com.example.Orders.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class OrderItem {
  private Long productId;//modif
  @Column(name = "product_name")
  private String productName;
+ @Positive(message = "Quantity must be positive")
  @Column(name = "quantity")
  private int quantity;
  @NotNull(message = "Unit price is required")

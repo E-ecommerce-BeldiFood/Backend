@@ -1,13 +1,13 @@
-package com.example.Users_ms;
+package Securityservice.Securityservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsersMsApplication {
+public class SecurityServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsersMsApplication.class, args);
+		SpringApplication.run(SecurityServiceApplication.class, args);
 	}
 
 }

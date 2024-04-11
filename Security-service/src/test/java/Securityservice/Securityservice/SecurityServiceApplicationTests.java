@@ -1,10 +1,10 @@
-package com.example.Users_ms;
+package Securityservice.Securityservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UsersMsApplicationTests {
+class SecurityServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
