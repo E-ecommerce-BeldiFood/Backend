@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class OrderRequestDto {
     @NotNull(message = "Customer ID is required")
-    private String customerId;
+    private Long customerId;
     private List<OrderItemDto> orderItems;
     @NotNull(message = "Total price is required")
     private BigDecimal totalPrice;
