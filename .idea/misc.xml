@@ -15,6 +15,10 @@
         <option value="$PROJECT_DIR$/Catalog-service/pom.xml" />
         <option value="$PROJECT_DIR$/Security-service/pom.xml" />
         <option value="$PROJECT_DIR$/Product-catalog-service/pom.xml" />
+        <option value="$USER_HOME$/Downloads/Backend-Hind/Backend-Hind/Orders/pom.xml" />
+        <option value="$USER_HOME$/Downloads/Backend-Hind/Backend-Hind/User/pom.xml" />
+        <option value="$USER_HOME$/Downloads/Backend-Noura/Backend-Noura/Product-catalog-service/pom.xml" />
+        <option value="$USER_HOME$/Downloads/Backend-Hind (1)/Backend-Hind/Orders/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -23,7 +27,9 @@
         <option value="$PROJECT_DIR$/Eureka-server/pom.xml" />
         <option value="$PROJECT_DIR$/Order-service/pom.xml" />
         <option value="$PROJECT_DIR$/ProductCatalogService/pom.xml" />
+        <option value="$PROJECT_DIR$/User-management-microservice/pom.xml" />
         <option value="$PROJECT_DIR$/security/pom.xml" />
+        <option value="$USER_HOME$/Downloads/Backend-Noura/Backend-Noura/Product-catalog-service/pom.xml" />
       </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

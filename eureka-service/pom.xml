@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ma.beldi-food</groupId>
-    <artifactId>Eureka-service</artifactId>
+    <artifactId>eureka-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Eureka-service</name>
     <description>Eureka-service</description>

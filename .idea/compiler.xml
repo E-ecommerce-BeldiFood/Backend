@@ -7,11 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Product-catalog-service" />
-        <module name="Eureka-service" />
+        <module name="eureka-service" />
+        <module name="order-service" />
         <module name="Security-service" />
-        <module name="Gateway" />
-        <module name="User-management-microservice" />
+        <module name="gateway-service" />
+        <module name="catalog-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,9 +20,11 @@
       <module name="Authentication-microservice (2)" target="17" />
       <module name="Catalog-service" target="21" />
       <module name="Eureka-server" target="17" />
-      <module name="Order-service" target="21" />
+      <module name="Product-catalog-service" target="17" />
       <module name="ProductCatalogService" target="21" />
       <module name="security" target="21" />
+      <module name="User" target="17" />
+      <module name="User-management-microservice" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -32,11 +34,14 @@
       <module name="Authentication-microservice (2)" options="-parameters" />
       <module name="Catalog-service" options="-parameters" />
       <module name="Eureka-server" options="-parameters" />
-      <module name="Eureka-service" options="-parameters" />
-      <module name="Gateway" options="-parameters" />
       <module name="Product-catalog-service" options="-parameters" />
       <module name="Security-service" options="-parameters" />
+      <module name="User" options="-parameters" />
       <module name="User-management-microservice" options="-parameters" />
+      <module name="catalog-service" options="-parameters" />
+      <module name="eureka-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="order-service" options="-parameters" />
     </option>
   </component>
 </project>
