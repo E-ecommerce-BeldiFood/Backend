@@ -20,9 +20,9 @@ import java.util.List;
 @Getter
 public class OrderResponseDto {
     private Long orderId;
-    private String customerId;
-    private Date createdAt;
-    private Date updatedAt;
+    private Long customerId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private List<OrderItemDto> orderItems;
     private BigDecimal totalPrice;
     private Integer quantity;

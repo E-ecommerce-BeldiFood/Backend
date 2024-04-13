@@ -30,16 +30,13 @@ public class OrderServiceImp implements OrderService{
     @Transactional
     @Override
     public OrderResponseDto addOrder(@Valid OrderRequestDto orderRequestDto) {
-        // Map OrderRequestDto to Order entity
         Order order = Mapping.mapToOrderEntity(orderRequestDto);
-
-        // Ensure that the OrderItems are properly set up with reference to the Order entity
         List<OrderItemDto> orderItemDtos = orderRequestDto.getOrderItems();
         if (orderItemDtos != null) {
             List<OrderItem> orderItems = orderItemDtos.stream()
                     .map(itemDto -> {
                         OrderItem orderItem = new OrderItem();
-                        orderItem.setOrder(order); // Set reference to the parent Order entity
+                        orderItem.setOrder(order);
                         orderItem.setProductId(itemDto.getProductId());
                         orderItem.setProductName(itemDto.getProductName());
                         orderItem.setQuantity(itemDto.getQuantity());
@@ -49,11 +46,7 @@ public class OrderServiceImp implements OrderService{
                     .collect(Collectors.toList());
             order.setOrderItems(orderItems);
         }
-
-        // Save the Order entity to the database
-        Order savedOrder = orderRepository.save(order); // Save the order and get the managed entity
-
-        // Map the saved Order entity to OrderResponseDto and return it
+        Order savedOrder = orderRepository.save(order);
         return Mapping.mapToOrderResponseDto(savedOrder);
     }
 
@@ -87,13 +80,8 @@ public class OrderServiceImp implements OrderService{
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
         if (optionalOrder.isPresent()) {
             Order existingOrder = optionalOrder.get();
-
-            // Map OrderRequestDto to existing Order entity instead of creating a new one
             Mapping.updateOrderEntity(orderRequestDto, existingOrder);
-
-            // Save the updated Order entity to the database
             Order savedOrder = orderRepository.save(existingOrder);
-
             return Mapping.mapToOrderResponseDto(savedOrder);
         } else {
             throw new OrderNotFoundException("Order not found with id: " + orderId);

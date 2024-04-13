@@ -7,7 +7,8 @@ import com.example.Orders.entities.Order;
 import com.example.Orders.entities.OrderItem;
 import org.modelmapper.ModelMapper;
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +25,15 @@ public class Mapping {
         return modelMapper.map(orderItemDto, OrderItem.class);
     }
     public static OrderResponseDto mapToOrderResponseDto(Order order) {
-        OrderResponseDto orderResponseDto = modelMapper.map(order, OrderResponseDto.class);
-        orderResponseDto.setCreatedAt(order.getCreatedAt());
-        orderResponseDto.setUpdatedAt(order.getUpdatedAt());
+        OrderResponseDto orderResponseDto = new OrderResponseDto();
+        orderResponseDto.setOrderId(order.getOrderId());
+        orderResponseDto.setCustomerId(order.getCustomerId());
+        orderResponseDto.setCreatedAt(LocalDateTime.now());
+        orderResponseDto.setUpdatedAt(LocalDateTime.now());
+        orderResponseDto.setTotalPrice(order.getTotalPrice());
+        orderResponseDto.setStatus(order.getStatus());
         orderResponseDto.setOrderItems(order.getOrderItems().stream()
-                .map(Mapping::mapToOrderItemDto)
+                .map(orderItem -> mapToOrderItemDto(orderItem))
                 .collect(Collectors.toList()));
         orderResponseDto.setQuantity(calculateTotalQuantity(order.getOrderItems()));
         return orderResponseDto;
@@ -46,10 +51,6 @@ public class Mapping {
         existingOrder.setCustomerId(orderRequestDto.getCustomerId());
         existingOrder.setTotalPrice(orderRequestDto.getTotalPrice());
         existingOrder.setStatus(orderRequestDto.getStatus());
-
-        existingOrder.setCreatedAt(existingOrder.getCreatedAt());
-        existingOrder.setUpdatedAt(new Date());
-
         existingOrder.getOrderItems().clear();
 
         orderRequestDto.getOrderItems().forEach(orderItemDto -> {
