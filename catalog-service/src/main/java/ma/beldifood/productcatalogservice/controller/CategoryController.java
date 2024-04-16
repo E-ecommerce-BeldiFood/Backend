@@ -1,5 +1,6 @@
 package ma.beldifood.productcatalogservice.controller;
 
+import jakarta.transaction.Transactional;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.CategoryRequestDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.CategoryResponseDto;
 import ma.beldifood.productcatalogservice.service.CategoryService;
@@ -13,6 +14,7 @@ import java.util.logging.ErrorManager;
 
 
 @RestController
+@Transactional
 @RequestMapping("/categories")
 public class CategoryController {
 

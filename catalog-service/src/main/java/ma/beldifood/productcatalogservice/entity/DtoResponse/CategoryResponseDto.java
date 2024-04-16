@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class CategoryResponseDto {
 
-    private Long categoryId;
+    private Long id;
     private String name;
     private List<SubcategoryResponseDto> subcategories;
 }

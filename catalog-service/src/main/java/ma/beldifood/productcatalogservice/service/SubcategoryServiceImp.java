@@ -1,5 +1,6 @@
 package ma.beldifood.productcatalogservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import ma.beldifood.productcatalogservice.entity.Category;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.SubcategoryRequestDto;
@@ -16,11 +17,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SubcategoryServiceImp implements  SubcategoryService{
 
 
     private final SubcategoryRepository subcategoryRepository;
     private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @Override
     public List<SubcategoryResponseDto> getAllSubcategories() {
@@ -32,9 +35,16 @@ public class SubcategoryServiceImp implements  SubcategoryService{
 
     @Override
     public SubcategoryResponseDto createSubcategory(SubcategoryRequestDto subcategoryRequestDto) {
+        System.out.println(subcategoryRequestDto);
         Subcategory subcategory = Mapping.mapToSubcategory(subcategoryRequestDto);
-        subcategory = subcategoryRepository.save(subcategory);
-        return Mapping.mapToSubcategoryResponseDto(subcategory);    }
+        System.out.println(subcategory);
+        Category category =categoryRepository.findById(subcategoryRequestDto.getCategoryId())
+                .orElseThrow(() -> new NoSuchElementException("Category not found with id: " + subcategoryRequestDto.getCategoryId()));;
+        subcategory.setCategory(category);
+                subcategory = subcategoryRepository.save(subcategory);
+        System.out.println(subcategory.getCategory());
+        return Mapping.mapToSubcategoryResponseDto(subcategory);
+    }
 
     @Override
     public SubcategoryResponseDto getSubcategoryById(Long id) {

@@ -12,19 +12,22 @@ import ma.beldifood.productcatalogservice.entity.Product;
 import ma.beldifood.productcatalogservice.entity.Subcategory;
 import org.modelmapper.ModelMapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @NoArgsConstructor
 public class Mapping {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     public static Product mapToProduct(ProductDtoRequest productDtoRequest) {
-        return modelMapper.map(productDtoRequest, Product.class);
+        Product product = modelMapper.map(productDtoRequest, Product.class);
+        product.setId(null);
+        return product;
+
     }
 
     public static ProductDtoResponse mapToProductResponseDto(Product product) {
-        return modelMapper.map(product, ProductDtoResponse.class);
+        ProductDtoResponse productDtoResponse =modelMapper.map(product, ProductDtoResponse.class);
+       // productDtoResponse.setSubcategoryName(product.getSubcategory().getName());
+
+        return productDtoResponse;
     }
 
 
@@ -33,29 +36,15 @@ public class Mapping {
     }
 
     public static CategoryResponseDto mapToCategoryResponseDto(Category category) {
-        //return modelMapper.map(category, CategoryResponseDto.class);
-
-        CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
-
-        // Map simple properties directly
-        categoryResponseDto.setCategoryId(category.getCategoryId());
-        categoryResponseDto.setName(category.getName());
-
-        // Map subcategories if they exist
-        if (category.getSubcategories() != null) {
-            List<SubcategoryResponseDto> subcategoryResponseDtos = category.getSubcategories().stream()
-                    .map(subcategory -> Mapping.mapToSubcategoryResponseDto(subcategory))
-                    .collect(Collectors.toList());
-            categoryResponseDto.setSubcategories(subcategoryResponseDtos);
-        }
-
-        return categoryResponseDto;
+        return modelMapper.map(category, CategoryResponseDto.class);
     }
 
 
 
     public static Subcategory mapToSubcategory(SubcategoryRequestDto subcategoryRequestDto) {
-        return modelMapper.map(subcategoryRequestDto, Subcategory.class);
+        Subcategory subcategory=  modelMapper.map(subcategoryRequestDto, Subcategory.class);
+        subcategory.setId(null);
+        return subcategory;
     }
 
     public static SubcategoryResponseDto mapToSubcategoryResponseDto(Subcategory subcategory) {

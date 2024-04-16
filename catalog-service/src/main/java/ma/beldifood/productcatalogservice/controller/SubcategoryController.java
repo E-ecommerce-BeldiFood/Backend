@@ -1,5 +1,6 @@
 package ma.beldifood.productcatalogservice.controller;
 
+import jakarta.transaction.Transactional;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.SubcategoryRequestDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.SubcategoryResponseDto;
 import ma.beldifood.productcatalogservice.service.SubcategoryService;
@@ -12,6 +13,7 @@ import java.util.List;
 
 
 @RestController
+@Transactional
 @RequestMapping("/subcategories")
 public class SubcategoryController {
 

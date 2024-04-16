@@ -3,6 +3,7 @@ package ma.beldifood.productcatalogservice.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -12,11 +13,12 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long id;
 
     @NotBlank
     private String name;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subcategories;
 }
