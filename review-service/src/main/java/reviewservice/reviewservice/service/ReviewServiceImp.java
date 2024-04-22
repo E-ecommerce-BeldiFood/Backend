@@ -33,14 +33,12 @@ public class ReviewServiceImp implements ReviewService{
     @Override
     public ReviewResponseDto createReview(ReviewRequestDto reviewDto) {
 
-        if(rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())==null) throw new ReviewNotFoundException("Product not found with Id: " + reviewDto.getProductId());
+//        if(rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())==null) throw new ReviewNotFoundException("Product not found with Id: " + reviewDto.getProductId());
         if(!(Boolean)rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())) throw new ReviewNotFoundException("Product not found with ID: " + reviewDto.getProductId());
         var review = Mapping.mapToReviewEntity(reviewDto);
 
         Review savedReview = reviewRepository.save(review);
 
-        // Pass the saved review to sendJsonMessage method
-//        rabbitMqJsonReview.sendJsonMessage(savedReview);
 
         return Mapping.mapToReviewDto(savedReview);
     }
