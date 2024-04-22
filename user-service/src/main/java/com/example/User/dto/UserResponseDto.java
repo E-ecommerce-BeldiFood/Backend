@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserResponseDto {
-    private Long id;
+    private Long userId;
     private String firstname;
     private String lastname;
     private  String username;

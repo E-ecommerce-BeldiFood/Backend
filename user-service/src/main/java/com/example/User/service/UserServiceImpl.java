@@ -39,31 +39,31 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserResponseDto getUserById(Long id) throws EntityNotFoundException, EmptyEntityException {
-        log.info("Fetching user by id: {}", id);
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+    public UserResponseDto getUserById(Long userId) throws EntityNotFoundException, EmptyEntityException {
+        log.info("Fetching user by id: {}", userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
         return Mapping.mapToUserResponseDto(user);
     }
 
     @Override
-    public UserResponseDto createUser(UserRequestDto userDto) throws EmailAlreadyExistsException {
+    public UserResponseDto createUser(UserRequestDto userDto) throws EmailAlreadyExistsException, EmptyEntityException {
         log.info("Creating new user with email : {}", userDto.getEmail());
 
         if (!UserInputValidation.isValidUsername(userDto.getUsername())) {
-            throw new IllegalArgumentException("Username is required");
+            throw new EmptyEntityException("Username is required");
         }
         if (!UserInputValidation.isValidFirstName(userDto.getFirstname())) {
-            throw new IllegalArgumentException("FirstName is required");
+            throw new EmptyEntityException("FirstName is required");
         }
         if (!UserInputValidation.isValidLastName(userDto.getLastname())) {
-            throw new IllegalArgumentException("LastName is required");
+            throw new EmptyEntityException("LastName is required");
         }
         if (!UserInputValidation.isValidEmail(userDto.getEmail())) {
-            throw new IllegalArgumentException("Invalid email format");
+            throw new EmptyEntityException("Invalid email format");
         }
         if (!UserInputValidation.isValidPassword(userDto.getPassword())) {
-            throw new IllegalArgumentException("Invalid password format");
+            throw new EmptyEntityException("Invalid password format");
         }
         // Check if email already exists
         if (userRepository.existsByEmail(userDto.getEmail())) {
@@ -92,12 +92,12 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void deleteUserById(Long id) throws EntityNotFoundException, EmptyEntityException{
-        log.info("delete user by id : {}", id);
-        if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found with id: " + id);
+    public void deleteUserById(Long userId) throws EntityNotFoundException, EmptyEntityException{
+        log.info("delete user by id : {}", userId);
+        if (!userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("User not found with id: " + userId);
         }
-        User user =userRepository.findById(id).orElseThrow();
+        User user =userRepository.findById(userId).orElseThrow();
         user.setActive(false);
         UserRequestDto userDto = Mapping.mapToUserRequestDto(user);
 
@@ -110,8 +110,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDto updateUser(UserRequestDto userDto) throws EntityNotFoundException {
-        User user = userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getId()));
+        User user = userRepository.findById(userDto.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getUserId()));
 
 
         user.setUserName(userDto.getUsername());

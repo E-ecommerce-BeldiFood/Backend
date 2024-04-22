@@ -3,10 +3,11 @@ package reviewservice.reviewservice.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter @Setter
-public class ReviewResponseDto {
+public class ReviewResponseDto  {
     private Long id;
     private Long userId;
     private Long productId;
