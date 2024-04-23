@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ma.beldi-food</groupId>
-	<artifactId>Product-catalog-service</artifactId>
+	<artifactId>catalog-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Product-catalog-service</name>
 	<description>Product-catalog-service</description>
