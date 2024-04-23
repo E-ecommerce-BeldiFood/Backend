@@ -2,6 +2,7 @@ package com.example.User.controller;
 
 import com.example.User.dto.UserRequestDto;
 import com.example.User.dto.UserResponseDto;
+import com.example.User.entities.User;
 import com.example.User.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -60,6 +61,16 @@ public class UserController {
     public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserRequestDto userDto) {
         UserResponseDto updatedUser = userService.updateUser(userDto);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @GetMapping("/by-login")
+    public ResponseEntity<User> getUserByLogin(@RequestParam String login){
+        return ResponseEntity.ok(userService.getUserByLogin(login));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserResponseDto> register(@RequestBody UserRequestDto userRequestDto){
+     return ResponseEntity.ok(userService.createUser(userRequestDto));
     }
 
 

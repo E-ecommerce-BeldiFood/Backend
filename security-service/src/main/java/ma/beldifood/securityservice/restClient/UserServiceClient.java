@@ -1,20 +1,21 @@
 package ma.beldifood.securityservice.restClient;
 
 import ma.beldifood.securityservice.model.dto.UserDto;
-import ma.beldifood.securityservice.model.dto.UserRegisterDto;
 import ma.beldifood.securityservice.model.dto.UserRegisterRequest;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import ma.beldifood.securityservice.model.dto.UserRegisterResponse;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "user-microservice")
+@FeignClient(name = "user-service")
 public interface UserServiceClient {
     @PostMapping("/users/register")
-    ResponseEntity<UserRegisterDto> save(@RequestBody UserRegisterRequest request);
+    ResponseEntity<UserRegisterResponse> save(@RequestBody UserRegisterRequest request);
 
-    @GetMapping("/users/username={username}")
-    ResponseEntity<UserDto> getUserByUsername(@PathVariable String username);
+
+    @GetMapping("/users/by-login")
+    ResponseEntity<UserDto> getUserByLogin(@RequestParam("login") String login);
 }

@@ -19,6 +19,8 @@
         <option value="$USER_HOME$/Downloads/Backend-Hind/Backend-Hind/User/pom.xml" />
         <option value="$USER_HOME$/Downloads/Backend-Noura/Backend-Noura/Product-catalog-service/pom.xml" />
         <option value="$USER_HOME$/Downloads/Backend-Hind (1)/Backend-Hind/Orders/pom.xml" />
+        <option value="$PROJECT_DIR$/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

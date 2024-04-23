@@ -2,6 +2,7 @@ package com.example.User.service;
 
 import com.example.User.dto.UserRequestDto;
 import com.example.User.dto.UserResponseDto;
+import com.example.User.entities.User;
 import com.example.User.exception.EmailAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -15,5 +16,8 @@ public interface UserService {
     UserResponseDto getUserByEmail(String email) throws EntityNotFoundException;
     public void deleteUserById(Long id) throws EntityNotFoundException;
     public UserResponseDto updateUser( UserRequestDto userDto) throws EntityNotFoundException;
+
+    public User getUserByLogin(String login) throws EntityNotFoundException;
+
 }
 

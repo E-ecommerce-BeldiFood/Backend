@@ -17,12 +17,10 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("User-management-microservice", r -> r.path("/auth/authenticate")
-                        .uri("lb://Authentication-microservice"))
+                .route("User-management-microservice", r -> r.path("/auth/**")
+                        .uri("lb://security-service"))
 
-                .route("Authentication-microservice", r -> r.path("/auth/users")
-                        .filters(f -> f.filter(filter))
-                        .uri("lb://Authentication-microservice"))
+
                 .build();
     }
 
