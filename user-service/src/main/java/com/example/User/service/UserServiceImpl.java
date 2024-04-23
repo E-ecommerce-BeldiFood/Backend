@@ -1,16 +1,17 @@
 package com.example.User.service;
 
-import com.example.User.entities.User;
 import com.example.User.dto.UserRequestDto;
 import com.example.User.dto.UserResponseDto;
+import com.example.User.entities.User;
 import com.example.User.exception.EmailAlreadyExistsException;
 import com.example.User.exception.EmptyEntityException;
-import com.example.User.repository.UserRepository;
 import com.example.User.mappers.Mapping;
+import com.example.User.repository.UserRepository;
 import com.example.User.utils.UserInputValidation;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     private  final UserRepository userRepository;
     private final UserInputValidation userInputValidation;
+
+    private final PasswordEncoder passwordEncoder;
 
 
 
@@ -39,32 +42,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserResponseDto getUserById(Long userId) throws EntityNotFoundException, EmptyEntityException {
-        log.info("Fetching user by id: {}", userId);
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+    public UserResponseDto getUserById(Long id) throws EntityNotFoundException, EmptyEntityException {
+        log.info("Fetching user by id: {}", id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
         return Mapping.mapToUserResponseDto(user);
     }
 
     @Override
-    public UserResponseDto createUser(UserRequestDto userDto) throws EmailAlreadyExistsException, EmptyEntityException {
+    public UserResponseDto createUser(UserRequestDto userDto) throws EmailAlreadyExistsException {
         log.info("Creating new user with email : {}", userDto.getEmail());
 
-        if (!UserInputValidation.isValidUsername(userDto.getUsername())) {
-            throw new EmptyEntityException("Username is required");
+        if (!UserInputValidation.isValidUsername(userDto.getUserName())) {
+            throw new IllegalArgumentException("UserName is required");
         }
-        if (!UserInputValidation.isValidFirstName(userDto.getFirstname())) {
-            throw new EmptyEntityException("FirstName is required");
+        if (!UserInputValidation.isValidFirstName(userDto.getFirstName())) {
+            throw new IllegalArgumentException("FirstName is required");
         }
-        if (!UserInputValidation.isValidLastName(userDto.getLastname())) {
-            throw new EmptyEntityException("LastName is required");
+        if (!UserInputValidation.isValidLastName(userDto.getLastName())) {
+            throw new IllegalArgumentException("LastName is required");
         }
         if (!UserInputValidation.isValidEmail(userDto.getEmail())) {
-            throw new EmptyEntityException("Invalid email format");
+            throw new IllegalArgumentException("Invalid email format");
         }
-        if (!UserInputValidation.isValidPassword(userDto.getPassword())) {
-            throw new EmptyEntityException("Invalid password format");
-        }
+
         // Check if email already exists
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists: " + userDto.getEmail());
@@ -72,14 +73,15 @@ public class UserServiceImpl implements UserService{
 
         User user = Mapping.mapToUserEntity(userDto);
         user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return Mapping.mapToUserResponseDto(userRepository.save(user));
     }
 
     @Override
     public UserResponseDto getUserByUserName(String userName) throws EntityNotFoundException {
-        log.info("Fetching user by username: {}", userName);
+        log.info("Fetching user by userName: {}", userName);
         User user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + userName));
+                .orElseThrow(() -> new EntityNotFoundException("User not found with userName: " + userName));
         return Mapping.mapToUserResponseDto(user);
     }
     @Override
@@ -92,35 +94,34 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void deleteUserById(Long userId) throws EntityNotFoundException, EmptyEntityException{
-        log.info("delete user by id : {}", userId);
-        if (!userRepository.existsById(userId)) {
-            throw new EntityNotFoundException("User not found with id: " + userId);
+    public void deleteUserById(Long id) throws EntityNotFoundException, EmptyEntityException{
+        log.info("delete user by id : {}", id);
+        if (!userRepository.existsById(id)) {
+            throw new EntityNotFoundException("User not found with id: " + id);
         }
-        User user =userRepository.findById(userId).orElseThrow();
-        user.setActive(false);
-        UserRequestDto userDto = Mapping.mapToUserRequestDto(user);
-
-        // Update the user details using the updateUser method
-        updateUser(userDto);
-        // Save the user with updated details and inactive status
-        userRepository.save(user);
+        userRepository.deleteById(id);
 
     }
 
     @Override
     public UserResponseDto updateUser(UserRequestDto userDto) throws EntityNotFoundException {
-        User user = userRepository.findById(userDto.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getUserId()));
+        User user = userRepository.findById(userDto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getId()));
 
 
-        user.setUserName(userDto.getUsername());
+        user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
 
         User updatedUser = userRepository.save(user);
         return Mapping.mapToUserResponseDto(updatedUser);
 
     }
+
+    @Override
+    public User getUserByLogin(String login) throws EntityNotFoundException {
+        return userRepository.findByLogin(login).orElseThrow(() -> new EntityNotFoundException("User not found with Login: " + login));
+    }
+
 
 
 }

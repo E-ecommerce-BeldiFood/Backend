@@ -1,16 +1,10 @@
 package com.example.User.entities;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Table(name = "users")
 @Entity
@@ -21,7 +15,7 @@ public class User {
 
    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
+    private Long id;
     @Column(unique = true, nullable = false)
     private String userName;
     private String firstName;
@@ -32,5 +26,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean active;
+    @Column(unique = true, nullable = false)
+    //Todo validation of phone number using patten validation
+    private String phone;
+
+    //
 
 }

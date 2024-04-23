@@ -18,13 +18,4 @@ public class Mapping {
         UserResponseDto userResponseDto = modelMapper.map(user, UserResponseDto.class);
         return userResponseDto;
     }
-
-    public static User mapToUser(UserResponseDto userResponseDto) {
-        User user = modelMapper.map(userResponseDto, User.class);
-        return user;
-    }
-    public static UserRequestDto mapToUserRequestDto(User user) {
-        return modelMapper.map(user, UserRequestDto.class);
-    }
-
 }

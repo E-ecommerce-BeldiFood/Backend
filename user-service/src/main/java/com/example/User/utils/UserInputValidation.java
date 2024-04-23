@@ -22,6 +22,8 @@ public class UserInputValidation {
         return email.matches(emailRegex);
     }
 
+
+
     //Minimum length of 8 characters.
     //Contains at least one digit.
     //Contains at least one uppercase letter.
