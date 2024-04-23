@@ -9,7 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
+<<<<<<< HEAD
 	<artifactId>order-service</artifactId>
+=======
+	<artifactId>Order-service</artifactId>
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Orders</name>
 	<description>order-service</description>
@@ -36,6 +40,13 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
+=======
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<dependency>
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.2.0</version>

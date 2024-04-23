@@ -13,6 +13,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 
 @Entity
 @Data
@@ -57,4 +61,10 @@ public class Product {
     @ToString.Exclude
     private Subcategory subcategory;
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 }

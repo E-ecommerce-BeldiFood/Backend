@@ -10,6 +10,10 @@ import ma.beldifood.productcatalogservice.exception.NotFoundException;
 import ma.beldifood.productcatalogservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+<<<<<<< HEAD
+=======
+import org.springframework.http.HttpStatus;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -123,4 +127,8 @@ public class ProductController {
         List<ProductDtoResponse> products = productService.getAllProducts();
         return ResponseEntity.ok(productsWithPagination);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 }

@@ -2,6 +2,10 @@ package ma.beldifood.productcatalogservice.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+=======
+import ma.beldifood.productcatalogservice.component.RabbitMqGetProductReviews;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductDtoRequest;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.entity.Product;
@@ -10,6 +14,11 @@ import ma.beldifood.productcatalogservice.exception.NotFoundException;
 import ma.beldifood.productcatalogservice.repository.ProductRepository;
 import ma.beldifood.productcatalogservice.repository.SubcategoryRepository;
 import ma.beldifood.productcatalogservice.utils.Mapping;
+<<<<<<< HEAD
+=======
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,6 +41,14 @@ public class ProductServiceImp implements ProductService{
 
     private final FirebaseStorageService firebaseStorageService; // Assume a service for interacting with Firebase Storage
 
+<<<<<<< HEAD
+=======
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    private RabbitMqGetProductReviews rabbitMqGetProductReviews;
+
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
     public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile file) {
         Product product = Mapping.mapToProduct(productDtoRequest);
 
@@ -50,6 +67,10 @@ public class ProductServiceImp implements ProductService{
     public ProductDtoResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
         return Mapping.mapToProductResponseDto(product);
     }
 
@@ -140,4 +161,9 @@ public class ProductServiceImp implements ProductService{
         }
     }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 }

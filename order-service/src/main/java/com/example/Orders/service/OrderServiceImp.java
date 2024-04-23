@@ -1,5 +1,9 @@
 package com.example.Orders.service;
 
+<<<<<<< HEAD
+=======
+import com.example.Orders.component.RabbitMqExistenceProduct;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 import com.example.Orders.dto.OrderItemDto;
 import com.example.Orders.dto.OrderRequestDto;
 import com.example.Orders.dto.OrderResponseDto;
@@ -23,6 +27,10 @@ import java.util.stream.Collectors;
 public class OrderServiceImp implements OrderService{
 
     private final OrderRepository orderRepository;
+<<<<<<< HEAD
+=======
+    private RabbitMqExistenceProduct rabbitMqExistenceProduct;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 
 
 
@@ -33,6 +41,14 @@ public class OrderServiceImp implements OrderService{
         Order order = Mapping.mapToOrderEntity(orderRequestDto);
         List<OrderItemDto> orderItemDtos = orderRequestDto.getOrderItems();
         if (orderItemDtos != null) {
+<<<<<<< HEAD
+=======
+            for (OrderItemDto itemDto : orderItemDtos){
+                if (!(Boolean)rabbitMqExistenceProduct.checkProductExistence(itemDto.getProductId())) {
+                    throw new OrderNotFoundException("Product not found with ID: " + itemDto.getProductId());
+                }
+            }
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
             List<OrderItem> orderItems = orderItemDtos.stream()
                     .map(itemDto -> {
                         OrderItem orderItem = new OrderItem();

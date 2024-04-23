@@ -27,7 +27,11 @@ public class OrderItem {
 
  @NotNull(message = "Product ID is required")
  @Column(name = "product_id")
+<<<<<<< HEAD
  private Long productId;//modif
+=======
+ private Long productId;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
  @Column(name = "product_name")
  private String productName;
  @Positive(message = "Quantity must be positive")

@@ -29,4 +29,8 @@ public class ProductDtoRequest {
     @NotNull
     private Long subcategoryId;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 }

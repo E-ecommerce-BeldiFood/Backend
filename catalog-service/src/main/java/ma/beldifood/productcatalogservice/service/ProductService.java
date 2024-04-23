@@ -26,4 +26,8 @@ public interface ProductService {
     List<ProductDtoResponse> searchProducts(String query);
 
     List<ProductDtoResponse> searchAndFilterProducts(BigDecimal minPrice, BigDecimal maxPrice, String subCategoryName) throws NotFoundException;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
 }
