@@ -3,6 +3,7 @@ package ma.beldifood.securityservice.configuration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import ma.beldifood.securityservice.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class JwtHelpers {
 
     @Value("${spring.security.key}")
     private String SECRET_KEY;
+    public static final long REFRESH_TOKEN_EXPIRATION_MS = 1000 * 60 * 60 * 24 * 7;
+    public static final long ACCESS_TOKEN_EXPIRATION_MS = 1000 * 60 * 60;
 
 
     public String extractUsername(String token) {
@@ -40,16 +43,20 @@ public class JwtHelpers {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(UserDto user, Long expirationTime) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        return createToken(claims, user,expirationTime);
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
-
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+    private String createToken(Map<String, Object> claims, UserDto user,Long expirationTime) {
+        Date now = new Date();
+        Date tokenExpiryDate = new Date(now.getTime() +expirationTime);
+        return Jwts.builder().setClaims(claims).setSubject(user.getUserName()).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(tokenExpiryDate)
+                .setIssuer(user.getRole())
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+
+
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

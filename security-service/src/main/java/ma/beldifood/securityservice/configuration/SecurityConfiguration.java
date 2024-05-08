@@ -1,7 +1,7 @@
 package ma.beldifood.securityservice.configuration;
 
+import lombok.AllArgsConstructor;
 import ma.beldifood.securityservice.service.JpaUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,9 +15,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfiguration  {
 
-    @Autowired
+
     private JpaUserDetailsService userDetailsService;
 
     @Bean
@@ -29,6 +30,7 @@ public class SecurityConfiguration  {
                 })
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> {
+                   // auth.requestMatchers("/users/**").hasAnyRole("ADMIN");
                     auth.requestMatchers("/error/**").permitAll();
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.anyRequest().authenticated();

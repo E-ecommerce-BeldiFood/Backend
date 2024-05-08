@@ -1,12 +1,13 @@
 package ma.beldifood.gateway;
 
+import io.netty.resolver.DefaultAddressResolverGroup;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.ReactiveDiscoveryClient;
-import org.springframework.cloud.gateway.discovery.DiscoveryClientRouteDefinitionLocator;
-import org.springframework.cloud.gateway.discovery.DiscoveryLocatorProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import reactor.netty.http.client.HttpClient;
 
+@CrossOrigin("*")
 @SpringBootApplication
 public class GatewayApplication {
 
@@ -15,9 +16,13 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
-    @Bean
+    /*@Bean
     DiscoveryClientRouteDefinitionLocator locator(ReactiveDiscoveryClient rdc, DiscoveryLocatorProperties dlp ){
         return new DiscoveryClientRouteDefinitionLocator(rdc,dlp);
+    }*/
+    @Bean
+    public HttpClient httpClient() {
+        return HttpClient.create().resolver(DefaultAddressResolverGroup.INSTANCE);
     }
 
 }

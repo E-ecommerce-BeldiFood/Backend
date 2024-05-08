@@ -17,4 +17,5 @@ public class ProductDtoResponse {
     private boolean availability ;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

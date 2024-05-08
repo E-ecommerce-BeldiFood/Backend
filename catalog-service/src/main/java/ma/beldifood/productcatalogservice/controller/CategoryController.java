@@ -15,6 +15,7 @@ import java.util.logging.ErrorManager;
 
 @RestController
 @Transactional
+@CrossOrigin("*")
 @RequestMapping("/categories")
 public class CategoryController {
 

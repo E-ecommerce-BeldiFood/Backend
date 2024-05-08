@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Transactional
+@CrossOrigin("*")
 @RequestMapping("/products")
 public class ProductController {
 

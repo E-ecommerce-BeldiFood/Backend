@@ -25,10 +25,27 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+    public void validateToken(final String token) {
+        Jwts
+                .parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token);
+    }
+
+    private Key getSignKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    // to validate token
     public Claims getAllClaimsFromToken(String token) {
         System.out.println(token);
         System.out.println(getSigningKey(secret).hashCode());
-        return Jwts.parser().setSigningKey(getSigningKey(secret)).parseClaimsJws(token).getBody();
+        return Jwts
+                .parser()
+                .setSigningKey(getSigningKey(secret))
+                .parseClaimsJws(token).getBody();
     }
 
     private boolean isTokenExpired(String token) {
