@@ -2,10 +2,18 @@ package ma.beldifood.productcatalogservice.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
 import ma.beldifood.productcatalogservice.client.ReviewServiceClient;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductDtoRequest;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductReviewDto;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.Review;
+=======
+<<<<<<< HEAD
+=======
+import ma.beldifood.productcatalogservice.component.RabbitMqGetProductReviews;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductDtoRequest;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.entity.Product;
 import ma.beldifood.productcatalogservice.entity.Subcategory;
@@ -13,6 +21,14 @@ import ma.beldifood.productcatalogservice.exception.NotFoundException;
 import ma.beldifood.productcatalogservice.repository.ProductRepository;
 import ma.beldifood.productcatalogservice.repository.SubcategoryRepository;
 import ma.beldifood.productcatalogservice.utils.Mapping;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,6 +48,7 @@ public class ProductServiceImp implements ProductService{
 
     private final ProductRepository productRepository;
     private final SubcategoryRepository subcategoryRepository;
+<<<<<<< HEAD
     private final ReviewServiceClient reviewServiceClient;
 
     private final FirebaseStorageService firebaseStorageService; // Assume a service for interacting with Firebase Storage
@@ -46,6 +63,19 @@ public class ProductServiceImp implements ProductService{
         return Mapping.mapToProductReviewDto(product, reviews);
     }
 
+=======
+
+    private final FirebaseStorageService firebaseStorageService; // Assume a service for interacting with Firebase Storage
+
+<<<<<<< HEAD
+=======
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    private RabbitMqGetProductReviews rabbitMqGetProductReviews;
+
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
     public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile file) {
         Product product = Mapping.mapToProduct(productDtoRequest);
 
@@ -64,12 +94,20 @@ public class ProductServiceImp implements ProductService{
     public ProductDtoResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
         return Mapping.mapToProductResponseDto(product);
     }
 
 
 
+<<<<<<< HEAD
 //    public Page<ProductDtoResponse> getAllProducts(int pageNumber, int pageSize, String field, String order) {
 //        PageRequest pageRequest = PageRequest.of(
 //                pageNumber,
@@ -98,6 +136,8 @@ public class ProductServiceImp implements ProductService{
         return productRepository.findAll(pageRequest).map(Mapping::mapToProductResponseDto);
 
     }
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
     public List<ProductDtoResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(Mapping::mapToProductResponseDto).collect(Collectors.toList());
@@ -145,6 +185,7 @@ public class ProductServiceImp implements ProductService{
 
 
 
+<<<<<<< HEAD
 //    @Override
 //    public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(Integer offset, Integer pageSize, String field) {
 //        Pageable pageable= PageRequest.of(offset, pageSize, Sort.by(field));
@@ -157,6 +198,14 @@ public class ProductServiceImp implements ProductService{
 //    }
 
 
+=======
+    @Override
+    public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(Integer offset, Integer pageSize, String field) {
+        Page<Product> products = productRepository.findAll(PageRequest.of(offset, pageSize, Sort.by(field)));
+        //return products.map(Mapping::mapToProductResponseDto);
+        return null;
+    }
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 
     @Override
     public List<ProductDtoResponse> searchProducts(String query) {
@@ -189,7 +238,15 @@ public class ProductServiceImp implements ProductService{
         }
     }
 
+<<<<<<< HEAD
 
 
 
+=======
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 }

@@ -56,7 +56,11 @@ public class DatabaseSeeder implements CommandLineRunner {
             product1.setPrice(new BigDecimal("10.99"));
             product1.setDescription("Description for Product 1");
             product1.setImageUrl("https://example.com/image1.jpg");
+<<<<<<< HEAD
             product1.setTimeToPrepareInMinute("15 min");
+=======
+            product1.setTimeToPrepareInMinute(15);
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
             product1.setAvailability(true);
             product1.setCreatedAt(LocalDateTime.now());
             product1.setUpdatedAt(LocalDateTime.now());

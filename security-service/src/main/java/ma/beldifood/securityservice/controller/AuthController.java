@@ -1,5 +1,6 @@
 package ma.beldifood.securityservice.controller;
 
+<<<<<<< HEAD
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import ma.beldifood.securityservice.Exception.WrongCredentialsException;
@@ -8,6 +9,21 @@ import ma.beldifood.securityservice.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+=======
+import lombok.RequiredArgsConstructor;
+import ma.beldifood.securityservice.Exception.WrongCredentialsException;
+import ma.beldifood.securityservice.model.dto.TokenDto;
+import ma.beldifood.securityservice.model.dto.UserLoginRequest;
+import ma.beldifood.securityservice.model.dto.UserRegisterRequest;
+import ma.beldifood.securityservice.model.dto.UserRegisterResponse;
+import ma.beldifood.securityservice.service.AuthService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +48,7 @@ public class AuthController {
         UserRegisterResponse response = authService.register(request);
         return ResponseEntity.ok(response);
     }
+<<<<<<< HEAD
 
 
     @GetMapping("/confirm-account")
@@ -50,4 +67,6 @@ public class AuthController {
         authService.handleSendPassword(resetPasswordDTO);
         return ResponseEntity.ok("Le mot de passe a été changé avec succès");
     }
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 }

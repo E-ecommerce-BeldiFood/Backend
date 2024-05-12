@@ -16,7 +16,10 @@ import java.util.logging.ErrorManager;
 @RestController
 @Transactional
 @RequestMapping("/categories")
+<<<<<<< HEAD
 
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 public class CategoryController {
 
     private final CategoryService categoryService;

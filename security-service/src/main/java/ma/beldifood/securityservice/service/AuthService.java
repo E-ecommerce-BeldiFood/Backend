@@ -1,10 +1,20 @@
 package ma.beldifood.securityservice.service;
 
+<<<<<<< HEAD
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import ma.beldifood.securityservice.Exception.WrongCredentialsException;
 import ma.beldifood.securityservice.configuration.JwtHelpers;
 import ma.beldifood.securityservice.model.dto.*;
+=======
+import lombok.AllArgsConstructor;
+import ma.beldifood.securityservice.Exception.WrongCredentialsException;
+import ma.beldifood.securityservice.configuration.JwtHelpers;
+import ma.beldifood.securityservice.model.dto.TokenDto;
+import ma.beldifood.securityservice.model.dto.UserLoginRequest;
+import ma.beldifood.securityservice.model.dto.UserRegisterRequest;
+import ma.beldifood.securityservice.model.dto.UserRegisterResponse;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 import ma.beldifood.securityservice.restClient.UserServiceClient;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +32,7 @@ public class AuthService {
 
 
     public TokenDto login(UserLoginRequest request) {
+<<<<<<< HEAD
         Authentication credentials = new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword());
         Authentication principal = authenticationManager.authenticate(credentials);
             if (principal.isAuthenticated() ) {
@@ -60,5 +71,22 @@ public class AuthService {
 
     public void handleSendPassword(ResetPasswordDTO resetPasswordDTO) {
              userServiceClient.handleRestPassword(resetPasswordDTO).getBody();
+=======
+        Authentication credentials = new UsernamePasswordAuthenticationToken(request.getLogin(),request.getPassword());
+        Authentication principal = authenticationManager.authenticate(credentials);
+        if (principal.isAuthenticated())
+        {
+            SecurityContextHolder.getContext().setAuthentication(principal);
+            return  TokenDto
+                    .builder()
+                    .token(jwtHelper.generateToken(request.getLogin()))
+                    .build();
+        }
+        else throw new WrongCredentialsException("Wrong credentials");
+    }
+
+    public UserRegisterResponse register(UserRegisterRequest request) {
+        return userServiceClient.save(request).getBody();
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
     }
 }

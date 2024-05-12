@@ -4,7 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
 //import reviewservice.reviewservice.component.RabbitMqExistenceProduct;
+=======
+import reviewservice.reviewservice.component.RabbitMqExistenceProduct;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 import reviewservice.reviewservice.dto.ReviewRequestDto;
 import reviewservice.reviewservice.dto.ReviewResponseDto;
 import reviewservice.reviewservice.entities.Review;
@@ -22,7 +26,11 @@ public class ReviewServiceImp implements ReviewService{
     private ReviewRepository reviewRepository;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+<<<<<<< HEAD
 //    private RabbitMqExistenceProduct rabbitMqExistenceProduct;
+=======
+    private RabbitMqExistenceProduct rabbitMqExistenceProduct;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 
     @Override
     public List<ReviewResponseDto> getAllReviews() {
@@ -33,8 +41,13 @@ public class ReviewServiceImp implements ReviewService{
     @Override
     public ReviewResponseDto createReview(ReviewRequestDto reviewDto) {
 
+<<<<<<< HEAD
 
 //        if(!(Boolean)rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())) throw new ReviewNotFoundException("Product not found with ID: " + reviewDto.getProductId());
+=======
+//        if(rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())==null) throw new ReviewNotFoundException("Product not found with Id: " + reviewDto.getProductId());
+        if(!(Boolean)rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())) throw new ReviewNotFoundException("Product not found with ID: " + reviewDto.getProductId());
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
         var review = Mapping.mapToReviewEntity(reviewDto);
 
         Review savedReview = reviewRepository.save(review);

@@ -15,7 +15,10 @@ import java.util.List;
 @RestController
 @Transactional
 @RequestMapping("/subcategories")
+<<<<<<< HEAD
 
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 public class SubcategoryController {
 
     private final SubcategoryService subcategoryService;

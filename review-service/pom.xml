@@ -42,10 +42,14 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+=======
+
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

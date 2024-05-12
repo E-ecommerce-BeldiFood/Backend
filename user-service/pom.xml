@@ -56,6 +56,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>org.eclipse.angus</groupId>
             <artifactId>jakarta.mail</artifactId>
@@ -73,6 +74,8 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
     </dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -84,8 +87,11 @@
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 	</dependencyManagement>
 
 	<build>

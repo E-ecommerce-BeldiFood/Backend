@@ -74,12 +74,15 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+<<<<<<< HEAD
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
     </dependencies>
     <dependencyManagement>
         <dependencies>

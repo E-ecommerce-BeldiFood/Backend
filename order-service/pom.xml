@@ -9,7 +9,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
+<<<<<<< HEAD
 	<artifactId>Order-service</artifactId>
+=======
+<<<<<<< HEAD
+	<artifactId>order-service</artifactId>
+=======
+	<artifactId>Order-service</artifactId>
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Orders</name>
 	<description>order-service</description>
@@ -36,18 +44,31 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
+=======
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.2.0</version>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+=======
+
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

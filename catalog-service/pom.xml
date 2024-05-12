@@ -9,7 +9,15 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ma.beldi-food</groupId>
+<<<<<<< HEAD
 	<artifactId>catalog-service</artifactId>
+=======
+<<<<<<< HEAD
+	<artifactId>Product-catalog-service</artifactId>
+=======
+	<artifactId>catalog-service</artifactId>
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Product-catalog-service</name>
 	<description>Product-catalog-service</description>
@@ -33,15 +41,25 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+=======
+			<groupId>org.springframework.boot</groupId>
+<<<<<<< HEAD
+=======
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+<<<<<<< HEAD
+=======
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>

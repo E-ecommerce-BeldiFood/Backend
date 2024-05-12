@@ -15,7 +15,12 @@ public class User {
     private String password;
     private String email;
     private String role;
+<<<<<<< HEAD
     private boolean active=false;
     private String phone;
 
+=======
+    private boolean active;
+    private String phone;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 }

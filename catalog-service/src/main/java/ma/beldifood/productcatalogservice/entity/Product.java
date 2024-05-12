@@ -13,7 +13,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 import java.util.List;
+=======
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 
 @Entity
 @Data
@@ -37,7 +44,11 @@ public class Product {
     private String imageUrl;
 
     @NotNull(message = "time is required")
+<<<<<<< HEAD
     private String timeToPrepareInMinute;
+=======
+    private double timeToPrepareInMinute;
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 
 
     private boolean availability = true;
@@ -58,7 +69,16 @@ public class Product {
     @ToString.Exclude
     private Subcategory subcategory;
 
+<<<<<<< HEAD
 
 
 
+=======
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 9ce32bb9bce45bd806a0c090a908f0753cf01bc6
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
 }

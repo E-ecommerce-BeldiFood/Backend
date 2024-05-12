@@ -25,6 +25,7 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+<<<<<<< HEAD
     public void validateToken(final String token) {
         Jwts
                 .parserBuilder()
@@ -46,6 +47,12 @@ public class JwtUtil {
                 .parser()
                 .setSigningKey(getSigningKey(secret))
                 .parseClaimsJws(token).getBody();
+=======
+    public Claims getAllClaimsFromToken(String token) {
+        System.out.println(token);
+        System.out.println(getSigningKey(secret).hashCode());
+        return Jwts.parser().setSigningKey(getSigningKey(secret)).parseClaimsJws(token).getBody();
+>>>>>>> 86da0c2e621f63cba7797a7f88ab1a46d30e9f9c
     }
 
     private boolean isTokenExpired(String token) {
