@@ -21,12 +21,13 @@ public class ProductDtoRequest {
 
 
     @NotNull(message = "time is required")
-    private double timeToPrepareInMinute;
+    private String timeToPrepareInMinute;
 
     private boolean availability = true;
 
     @NotNull(message = "Subcategory ID is required")
     @NotNull
     private Long subcategoryId;
+
 
 }

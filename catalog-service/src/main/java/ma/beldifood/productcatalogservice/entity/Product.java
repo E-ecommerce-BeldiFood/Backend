@@ -13,6 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,7 +37,7 @@ public class Product {
     private String imageUrl;
 
     @NotNull(message = "time is required")
-    private double timeToPrepareInMinute;
+    private String timeToPrepareInMinute;
 
 
     private boolean availability = true;
@@ -56,5 +57,8 @@ public class Product {
     //to ignore it when we gonna show procut
     @ToString.Exclude
     private Subcategory subcategory;
+
+
+
 
 }

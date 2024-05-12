@@ -3,6 +3,7 @@ package ma.beldifood.productcatalogservice.repository;
 import ma.beldifood.productcatalogservice.entity.Product;
 import ma.beldifood.productcatalogservice.entity.Subcategory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -27,4 +28,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             BigDecimal minPrice,
             BigDecimal maxPrice);
 
+
 }
+

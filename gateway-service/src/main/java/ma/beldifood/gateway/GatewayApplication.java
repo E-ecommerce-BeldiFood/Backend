@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import reactor.netty.http.client.HttpClient;
 
-@CrossOrigin("*")
 @SpringBootApplication
 public class GatewayApplication {
 

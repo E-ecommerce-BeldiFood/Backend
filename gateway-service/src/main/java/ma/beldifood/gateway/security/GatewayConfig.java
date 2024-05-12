@@ -33,6 +33,11 @@ public class GatewayConfig {
                 .route("Product-catalog-service" , r -> r.path("/subcategories/**")
                 .uri("lb://Product-catalog-service"))
 
+                .route("Orders" , r -> r.path("/orders/**")
+                        .uri("lb://Orders"))
+
+                .route("review-service" , r -> r.path("/reviews/**")
+                        .uri("lb://review-service"))
 
                 .build();
 

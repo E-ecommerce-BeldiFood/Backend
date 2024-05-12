@@ -3,13 +3,16 @@ package ma.beldifood.productcatalogservice.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductDtoRequest;
+import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductReviewDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.exception.NotFoundException;
 import ma.beldifood.productcatalogservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,15 +21,27 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Transactional
-@CrossOrigin("*")
 @RequestMapping("/products")
+
 public class ProductController {
 
     @Autowired
     private  final  ProductService productService;
     private final ObjectMapper objectMapper;
+
+
+
+    @GetMapping("/{productId}/reviews")
+    public ResponseEntity<?> getProductReviewById(@PathVariable Long productId){
+        try {
+            ProductReviewDto productReviewDto = productService.getProductReviewById(productId);
+            return new ResponseEntity<>(productReviewDto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping
     public ResponseEntity<ProductDtoResponse> createProduct(@RequestParam("product") String  productDtoRequestString, @RequestParam("productImage") MultipartFile productImage) throws JsonProcessingException {
@@ -36,11 +51,13 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductDtoResponse> getProductById(@PathVariable Long id) {
         ProductDtoResponse product = productService.getProductById(id);
         return ResponseEntity.ok(product);
     }
+
 
     @GetMapping
     public ResponseEntity<List<ProductDtoResponse>> getAllProducts() {
@@ -78,10 +95,6 @@ public class ProductController {
 
 
 
-
-
-
-
     @GetMapping("/search-and-filter")
     private ResponseEntity<List<ProductDtoResponse>> searchAndFilterProducts(
             @RequestParam(defaultValue = "0") BigDecimal minPrice,
@@ -102,26 +115,25 @@ public class ProductController {
         }
         return ResponseEntity.ok(allProducts);
     }
-
     @GetMapping("/pagination")
-    private ResponseEntity<Page<ProductDtoResponse>> getProductsWithPagination(
-            @RequestParam(defaultValue = "0") int offset,
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "id") String sortBy) {
-        List<ProductDtoResponse> products = productService.getAllProducts();
-        System.out.println(products.size());
-        Page<ProductDtoResponse> productsWithPagination = productService.findProductsWithPaginationAndSorting(offset, pageSize, sortBy);
-        return ResponseEntity.ok(productsWithPagination);
-    }
+    ResponseEntity<Page<ProductDtoResponse>> getProductsWithPagination(@RequestParam("pageNumber") int pageNumber,
+                                                               @RequestParam("pageSize") int pageSize,
+                                                               @RequestParam("field") String field,
+                                                               @RequestParam("order") String order) {
+        return ResponseEntity.ok(productService.findProductsWithPaginationAndSorting(pageNumber,pageSize,field,order));
+}
 
-    @GetMapping("/pagination2")
-    public ResponseEntity<Page<ProductDtoResponse>> getProductsWithPagination2( @RequestParam(defaultValue = "0") int offset,
-                                                                     @RequestParam(defaultValue = "10") int pageSize,
-                                                                     @RequestParam(defaultValue = "id") String sortBy) {
-        Page<ProductDtoResponse> productsWithPagination = productService.findProductsWithPaginationAndSorting(offset, pageSize, sortBy);
 
-        System.out.println("in method get all products");
-        List<ProductDtoResponse> products = productService.getAllProducts();
-        return ResponseEntity.ok(productsWithPagination);
-    }
+
+//    @GetMapping("/pagination2")
+//    public ResponseEntity<Page<ProductDtoResponse>> getProductsWithPagination2( @RequestParam(defaultValue = "0") int offset,
+//                                                                     @RequestParam(defaultValue = "3") int pageSize,
+//                                                                     @RequestParam(defaultValue = "id") String sortBy) {
+//        Page<ProductDtoResponse> productsWithPagination = productService.findProductsWithPaginationAndSorting(offset, pageSize, sortBy);
+//
+//        System.out.println("in method get all products");
+//
+//        return ResponseEntity.ok(productsWithPagination);
+//    }
+
 }

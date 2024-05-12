@@ -2,7 +2,10 @@ package ma.beldifood.productcatalogservice.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import ma.beldifood.productcatalogservice.client.ReviewServiceClient;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductDtoRequest;
+import ma.beldifood.productcatalogservice.entity.DtoRequest.ProductReviewDto;
+import ma.beldifood.productcatalogservice.entity.DtoRequest.Review;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.entity.Product;
 import ma.beldifood.productcatalogservice.entity.Subcategory;
@@ -29,8 +32,19 @@ public class ProductServiceImp implements ProductService{
 
     private final ProductRepository productRepository;
     private final SubcategoryRepository subcategoryRepository;
+    private final ReviewServiceClient reviewServiceClient;
 
     private final FirebaseStorageService firebaseStorageService; // Assume a service for interacting with Firebase Storage
+
+
+
+
+
+    public ProductReviewDto getProductReviewById(Long id) throws Exception{
+        var product = productRepository.findById(id).orElseThrow(() ->new NotFoundException("Product not found"));
+        List<Review> reviews = reviewServiceClient.getReviewsByProductId(product.getId());
+        return Mapping.mapToProductReviewDto(product, reviews);
+    }
 
     public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile file) {
         Product product = Mapping.mapToProduct(productDtoRequest);
@@ -50,11 +64,40 @@ public class ProductServiceImp implements ProductService{
     public ProductDtoResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+
         return Mapping.mapToProductResponseDto(product);
     }
 
 
 
+//    public Page<ProductDtoResponse> getAllProducts(int pageNumber, int pageSize, String field, String order) {
+//        PageRequest pageRequest = PageRequest.of(
+//                pageNumber,
+//                pageSize,
+//                Sort.by(order.equalsIgnoreCase("desc")?
+//                        Sort.Direction.DESC:
+//                        Sort.Direction.ASC,
+//                        field)
+//        );
+//        return ProductDtoResponse.findAll(pageRequest).map(Mapping::mapToProductResponseDto);
+//    }
+        @Override
+    public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(int pageNumber, int pageSize, String field, String order) {
+        PageRequest pageRequest = PageRequest.of(
+                pageNumber,
+                pageSize,
+                Sort.by(order.equalsIgnoreCase("desc")?
+                        Sort.Direction.DESC:
+                        Sort.Direction.ASC,
+                        field)
+        );
+
+//        Page<Product> products = productRepository.findAll(pageRequest);
+
+
+        return productRepository.findAll(pageRequest).map(Mapping::mapToProductResponseDto);
+
+    }
     public List<ProductDtoResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(Mapping::mapToProductResponseDto).collect(Collectors.toList());
@@ -102,12 +145,18 @@ public class ProductServiceImp implements ProductService{
 
 
 
-    @Override
-    public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(Integer offset, Integer pageSize, String field) {
-        Page<Product> products = productRepository.findAll(PageRequest.of(offset, pageSize, Sort.by(field)));
-        //return products.map(Mapping::mapToProductResponseDto);
-        return null;
-    }
+//    @Override
+//    public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(Integer offset, Integer pageSize, String field) {
+//        Pageable pageable= PageRequest.of(offset, pageSize, Sort.by(field));
+//
+//        Page<Product> products = productRepository.findAll(pageable);
+//
+//
+//        return products.map(Mapping::mapToProductResponseDto);
+//
+//    }
+
+
 
     @Override
     public List<ProductDtoResponse> searchProducts(String query) {
@@ -139,5 +188,8 @@ public class ProductServiceImp implements ProductService{
                     .toList();
         }
     }
+
+
+
 
 }

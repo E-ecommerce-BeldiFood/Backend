@@ -14,8 +14,8 @@ import java.util.List;
 
 @RestController
 @Transactional
-@CrossOrigin("*")
 @RequestMapping("/subcategories")
+
 public class SubcategoryController {
 
     private final SubcategoryService subcategoryService;
