@@ -21,6 +21,7 @@
         <option value="$USER_HOME$/Downloads/Backend-Hind (1)/Backend-Hind/Orders/pom.xml" />
         <option value="$PROJECT_DIR$/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/review-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -34,7 +35,6 @@
         <option value="$USER_HOME$/Downloads/Backend-Noura/Backend-Noura/Product-catalog-service/pom.xml" />
       </set>
     </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

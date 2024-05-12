@@ -9,10 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Product-catalog-service" />
         <module name="eureka-service" />
+        <module name="gateway-service" />
+        <module name="review-service" />
+        <module name="catalog-service" />
+        <module name="Order-service" />
         <module name="order-service" />
         <module name="user-service" />
         <module name="Security-service" />
-        <module name="gateway-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -20,6 +23,7 @@
       <module name="Authentication-microservice (1)" target="17" />
       <module name="Authentication-microservice (2)" target="17" />
       <module name="Catalog-service" target="21" />
+      <module name="Ecommerce_backend" target="17" />
       <module name="Eureka-server" target="17" />
       <module name="Eureka-service" target="17" />
       <module name="Gateway" target="17" />
@@ -35,6 +39,7 @@
       <module name="Authentication-microservice (2)" options="-parameters" />
       <module name="Catalog-service" options="-parameters" />
       <module name="Eureka-server" options="-parameters" />
+      <module name="Order-service" options="-parameters" />
       <module name="Product-catalog-service" options="-parameters" />
       <module name="Security-service" options="-parameters" />
       <module name="User-management-microservice" options="-parameters" />
@@ -42,6 +47,7 @@
       <module name="eureka-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
+      <module name="review-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>
