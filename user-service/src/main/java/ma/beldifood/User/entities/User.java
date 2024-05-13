@@ -31,8 +31,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean active;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
+
     @Column(unique = true, nullable = false)
     //Todo validation of phone number using patten validation
     private String phone;

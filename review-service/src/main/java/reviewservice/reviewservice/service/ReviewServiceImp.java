@@ -1,6 +1,7 @@
 package reviewservice.reviewservice.service;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ReviewServiceImp implements ReviewService{
     @Autowired
     private ReviewRepository reviewRepository;
@@ -32,14 +33,9 @@ public class ReviewServiceImp implements ReviewService{
     }
     @Override
     public ReviewResponseDto createReview(ReviewRequestDto reviewDto) {
-
-
 //        if(!(Boolean)rabbitMqExistenceProduct.checkProductExistence(reviewDto.getProductId())) throw new ReviewNotFoundException("Product not found with ID: " + reviewDto.getProductId());
         var review = Mapping.mapToReviewEntity(reviewDto);
-
         Review savedReview = reviewRepository.save(review);
-
-
         return Mapping.mapToReviewDto(savedReview);
     }
 
