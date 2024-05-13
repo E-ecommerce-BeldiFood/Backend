@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 public class ReviewServiceImp implements ReviewService{
     @Autowired
     private ReviewRepository reviewRepository;
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+
 //    private RabbitMqExistenceProduct rabbitMqExistenceProduct;
 
     @Override

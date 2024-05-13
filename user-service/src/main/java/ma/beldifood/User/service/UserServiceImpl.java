@@ -8,6 +8,7 @@ import ma.beldifood.User.dto.ResetPasswordDTO;
 import ma.beldifood.User.dto.UserRequestDto;
 import ma.beldifood.User.dto.UserResponseDto;
 import ma.beldifood.User.emails.IMailService;
+import ma.beldifood.User.entities.Status;
 import ma.beldifood.User.entities.User;
 import ma.beldifood.User.exception.EmailAlreadyExistsException;
 import ma.beldifood.User.exception.EmptyEntityException;
@@ -20,10 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 
@@ -52,7 +50,6 @@ public class UserServiceImpl implements UserService{
                     .map(Mapping::mapToUserResponseDto)
                     .toList();
         }
-
     }
 
     @Override
@@ -84,6 +81,7 @@ public class UserServiceImpl implements UserService{
         }
         User user = Mapping.mapToUserEntity(userDto);
         user.setActive(false);
+        user.setStatus(Status.ACTIVE);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String code = UUID.randomUUID().toString();
         user.setConfirmationToken(code);
@@ -109,11 +107,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUserById(Long id) throws EntityNotFoundException, EmptyEntityException{
-        log.info("delete user by id : {}", id);
-        if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found with id: " + id);
-        }
-        userRepository.deleteById(id);
+        log.info("delete user by id : {}", id); // Logging the deletion operation
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setStatus(Status.DISABLED); // Deactivate the user instead of deleting
+            userRepository.save(user); // Update the user entity
+        } else  throw new EntityNotFoundException("User not found with id: " + id);
 
     }
 
