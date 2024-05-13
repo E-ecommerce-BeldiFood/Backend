@@ -1,9 +1,13 @@
 package ma.beldifood.productcatalogservice.entity.DtoRequest;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import ma.beldifood.productcatalogservice.entity.enums.STATUS;
 
 import java.math.BigDecimal;
 
@@ -23,7 +27,8 @@ public class ProductDtoRequest {
     @NotNull(message = "time is required")
     private String timeToPrepareInMinute;
 
-    private boolean availability = true;
+    @Enumerated(EnumType.STRING)
+    private STATUS status;
 
     @NotNull(message = "Subcategory ID is required")
     @NotNull

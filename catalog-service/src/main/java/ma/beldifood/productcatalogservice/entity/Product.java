@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import ma.beldifood.productcatalogservice.entity.enums.STATUS;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -39,19 +41,14 @@ public class Product {
     @NotNull(message = "time is required")
     private String timeToPrepareInMinute;
 
-
-    private boolean availability = true;
+    @Enumerated(EnumType.STRING)
+    private STATUS status;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-
-    private int positiveFeedback=0;
-
-    private int negativeFeedback=0;
 
     @ManyToOne
     //to ignore it when we gonna show procut
