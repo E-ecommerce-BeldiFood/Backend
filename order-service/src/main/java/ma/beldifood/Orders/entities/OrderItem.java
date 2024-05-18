@@ -21,19 +21,18 @@ public class OrderItem {
  @Id
  @GeneratedValue(strategy= GenerationType.AUTO)
  private Long itemId;
- @ManyToOne
- @JoinColumn(name = "order_id")
- private Order order;
 
  @NotNull(message = "Product ID is required")
  @Column(name = "product_id")
- private Long productId;//modif
- @Column(name = "product_name")
- private String productName;
+ private Long productId;
+
+ private String name;
+ private BigDecimal price;
+ private String imageUrl;
  @Positive(message = "Quantity must be positive")
  @Column(name = "quantity")
  private int quantity;
- @NotNull(message = "Unit price is required")
- @Column(name="unitPrice")
- private BigDecimal unitPrice;
+
+ @ManyToOne
+ private Order order;
 }

@@ -38,13 +38,16 @@ public class Order {
 
     @Column(name="total_price")
     private BigDecimal totalPrice;
+
     @Column(name="status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    //how many products
     private Integer TotalQuantity;
 
     @OneToMany(mappedBy = "order"/*,cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
-    private List<OrderItems> orderItems= new ArrayList<>();
+    private List<OrderItem> orderItems= new ArrayList<>();
 
 
 }

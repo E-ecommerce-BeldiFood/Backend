@@ -21,12 +21,14 @@ public class MyUserDetails implements UserDetails {
     private String password;
     private String role;
     private boolean active;
+    private Status status;
 
     public MyUserDetails(UserDto userDto){
         this.userName=userDto.getUserName();
         this.password=userDto.getPassword();
         this.role=userDto.getRole();
         this.active=userDto.isActive();
+        this.status=userDto.getStatus();
     }
 
     @Override
@@ -61,7 +63,6 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return active;
-
+        return active && status == Status.ENABLED;
     }
 }

@@ -2,6 +2,7 @@ package ma.beldifood.securityservice.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ma.beldifood.securityservice.model.Status;
 
 @Data
 @AllArgsConstructor
@@ -14,4 +15,5 @@ public class UserDto {
     private String role;
     private boolean active;
     private String phone;
+    private Status status;
 }

@@ -28,7 +28,7 @@ public class UserRegisterRequest {
     @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Role cannot be blank")
+
     private String role;
 
     private boolean active = true;

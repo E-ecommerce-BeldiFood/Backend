@@ -1,7 +1,7 @@
 package ma.beldifood.gateway.security;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -12,17 +12,16 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
 @Slf4j
 @RefreshScope
 @Component
+@RequiredArgsConstructor
 public class AuthenticationFilter implements GatewayFilter {
-    @Autowired
-    private ConfigRole configRole;
 
-    @Autowired
-    private RouterValidator routerValidator;
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final ConfigRole configRole;
+    private final RouterValidator routerValidator;
+    private final JwtUtil jwtUtil;
 
     @Value("${jwt.prefix}")
     public String TOKEN_PREFIX;
@@ -35,6 +34,8 @@ public class AuthenticationFilter implements GatewayFilter {
             String token = request.getHeaders().getOrEmpty("Authorization").get(0);
             if (token != null && token.startsWith("Bearer ")) token = token.substring(7);
             try {
+                String path=exchange.getRequest().getURI().getPath();
+                if (!configRole.filtersRoles(token, path)) return onError(null);
                 // we use this method to validate token
                 jwtUtil.getAllClaimsFromToken(token);
             } catch (Exception e) {

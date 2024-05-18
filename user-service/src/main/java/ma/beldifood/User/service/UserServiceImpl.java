@@ -8,6 +8,7 @@ import ma.beldifood.User.dto.ResetPasswordDTO;
 import ma.beldifood.User.dto.UserRequestDto;
 import ma.beldifood.User.dto.UserResponseDto;
 import ma.beldifood.User.emails.IMailService;
+import ma.beldifood.User.entities.Role;
 import ma.beldifood.User.entities.Status;
 import ma.beldifood.User.entities.User;
 import ma.beldifood.User.exception.EmailAlreadyExistsException;
@@ -81,7 +82,8 @@ public class UserServiceImpl implements UserService{
         }
         User user = Mapping.mapToUserEntity(userDto);
         user.setActive(false);
-        user.setStatus(Status.ACTIVE);
+        user.setStatus(Status.ENABLED);
+        user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String code = UUID.randomUUID().toString();
         user.setConfirmationToken(code);

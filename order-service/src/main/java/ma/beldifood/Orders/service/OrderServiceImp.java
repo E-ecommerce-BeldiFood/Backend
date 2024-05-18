@@ -6,7 +6,7 @@ import ma.beldifood.Orders.dto.OrderItemRequest;
 import ma.beldifood.Orders.dto.OrderRequest;
 import ma.beldifood.Orders.dto.OrderResponse;
 import ma.beldifood.Orders.entities.Order;
-import ma.beldifood.Orders.entities.OrderItems;
+import ma.beldifood.Orders.entities.OrderItem;
 import ma.beldifood.Orders.exception.OrderNotFoundException;
 import ma.beldifood.Orders.repository.OrderItemRepository;
 import ma.beldifood.Orders.repository.OrderRepository;
@@ -37,13 +37,13 @@ public class OrderServiceImp implements OrderService {
         List<OrderItemRequest> orderItemRequests = orderRequest.getOrderItemsRequests();
         if (orderItemRequests != null && !orderItemRequests.isEmpty()) {
             String orderId = String.valueOf(savedOrder.getOrderId());
-            List<OrderItems> savedOrderItems = orderItemRequests.stream()
+            List<OrderItem> savedOrderItems = orderItemRequests.stream()
                     .map(itemDto -> {
                         ProductDtoResponse productDto = productServiceClient.getProductById(itemDto.getProductId());
                         if (productDto == null) {
                             throw new OrderNotFoundException("Product not found with ID: " + itemDto.getProductId());
                         }
-                        OrderItems orderItem = Mapping.mapToOrderItems(itemDto, productDto, orderId);
+                        OrderItem orderItem = Mapping.mapToOrderItems(itemDto, productDto, orderId);
                         orderItem.setOrder(savedOrder);
                         return orderItemRepository.save(orderItem);
                     })
@@ -109,13 +109,13 @@ public class OrderServiceImp implements OrderService {
         List<OrderItemRequest> orderItemRequests = orderRequest.getOrderItemsRequests();
         if (orderItemRequests != null && !orderItemRequests.isEmpty()) {
             String orderIdStr = String.valueOf(existingOrder.getOrderId());
-            List<OrderItems> updatedOrderItems = orderItemRequests.stream()
+            List<OrderItem> updatedOrderItems = orderItemRequests.stream()
                     .map(itemDto -> {
                         ProductDtoResponse productDto = productServiceClient.getProductById(itemDto.getProductId());
                         if (productDto == null) {
                             throw new OrderNotFoundException("Product not found with ID: " + itemDto.getProductId());
                         }
-                        OrderItems orderItem = Mapping.mapToOrderItems(itemDto, productDto, orderIdStr);
+                        OrderItem orderItem = Mapping.mapToOrderItems(itemDto, productDto, orderIdStr);
                         return orderItemRepository.save(orderItem);
                     })
                     .collect(Collectors.toList());

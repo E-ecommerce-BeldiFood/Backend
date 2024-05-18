@@ -6,7 +6,7 @@ import ma.beldifood.Orders.dto.OrderItemResponse;
 import ma.beldifood.Orders.dto.OrderRequest;
 import ma.beldifood.Orders.dto.OrderResponse;
 import ma.beldifood.Orders.entities.Order;
-import ma.beldifood.Orders.entities.OrderItems;
+import ma.beldifood.Orders.entities.OrderItem;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
@@ -23,8 +23,8 @@ public class Mapping {
 
         modelMapper.typeMap(OrderRequest.class, Order.class)
                 .addMappings(mapper -> mapper.skip(Order::setOrderItems));
-        modelMapper.typeMap(OrderItemRequest.class, OrderItems.class)
-                .addMappings(mapper -> mapper.skip(OrderItems::setOrder));
+        modelMapper.typeMap(OrderItemRequest.class, OrderItem.class)
+                .addMappings(mapper -> mapper.skip(OrderItem::setOrder));
     }
 
 
@@ -42,20 +42,20 @@ public class Mapping {
         orderResponse.setOrderItems(mapToOrderItemResponseList(order.getOrderItems()));
         return orderResponse;
     }
-    private static Integer calculateTotalQuantity(List<OrderItems> orderItems){
+    private static Integer calculateTotalQuantity(List<OrderItem> orderItems){
         return orderItems.stream()
-                .mapToInt(OrderItems::getQuantity)
+                .mapToInt(OrderItem::getQuantity)
                 .sum();
     }
-    private static BigDecimal calculateTotalPrice(List<OrderItems> orderItems) {
+    private static BigDecimal calculateTotalPrice(List<OrderItem> orderItems) {
         BigDecimal totalPrice = BigDecimal.ZERO;
-        for (OrderItems item : orderItems) {
+        for (OrderItem item : orderItems) {
             totalPrice = totalPrice.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
         }
         return totalPrice;
     }
-    public static OrderItems mapToOrderItems(OrderItemRequest itemDto, ProductDtoResponse productDto, String orderId) {
-        OrderItems orderItem = new OrderItems();
+    public static OrderItem mapToOrderItems(OrderItemRequest itemDto, ProductDtoResponse productDto, String orderId) {
+        OrderItem orderItem = new OrderItem();
         orderItem.setItemId(itemDto.getItemId());
         orderItem.setProductId(itemDto.getProductId());
         orderItem.setName(productDto.getName());
@@ -65,7 +65,7 @@ public class Mapping {
         return orderItem;
     }
 
-    public static OrderItemResponse mapToOrderItemResponse(OrderItems orderItem) {
+    public static OrderItemResponse mapToOrderItemResponse(OrderItem orderItem) {
         OrderItemResponse orderItemResponse = new OrderItemResponse();
         orderItemResponse.setItemId(orderItem.getItemId());
         orderItemResponse.setProductId(orderItem.getProductId());
@@ -75,7 +75,7 @@ public class Mapping {
         orderItemResponse.setQuantity(orderItem.getQuantity());
         return orderItemResponse;
     }
-    public static List<OrderItemResponse> mapToOrderItemResponseList(List<OrderItems> orderItems) {
+    public static List<OrderItemResponse> mapToOrderItemResponseList(List<OrderItem> orderItems) {
         return orderItems.stream()
                 .map(Mapping::mapToOrderItemResponse)
                 .collect(Collectors.toList());

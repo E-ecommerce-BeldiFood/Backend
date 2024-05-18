@@ -20,17 +20,17 @@ public class ConfigRole {
         Claims claims = jwtUtils.getAllClaimsFromToken(token);
         //plm
         String iss = claims.get("iss", String.class);
-        Pattern pattern = Pattern.compile("role=(\\w+)");
+        /*Pattern pattern = Pattern.compile("role=(\\w+)");
         Matcher matcher = pattern.matcher(iss);
         List<String> roles = new ArrayList<>();
         while (matcher.find()) {
             String role = matcher.group(1);
             roles.add(role);
-        }
-        if (roles.isEmpty()) return false;
-        if (roles.contains("ADMIN")) return true;
-        if (roles.contains("CLIENT") && !roles.contains("ADMIN")) {
-            if (path.contains("/admin")) {
+        }*/
+        if (iss==null) return false;
+        if (iss.contains("ADMIN")) return true;
+        if (iss.contains("USER") ) {
+            if (path.toLowerCase().contains("/admin")) {
                 return false;
             }
             return true;
