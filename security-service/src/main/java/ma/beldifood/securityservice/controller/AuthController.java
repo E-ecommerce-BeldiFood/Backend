@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+
 public class AuthController {
 
 
@@ -45,9 +46,9 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> handleChangePassword(@RequestParam("token") String token, @RequestBody ResetPasswordDTO resetPasswordDTO) {
-        resetPasswordDTO.setToken(token);
+    public ResponseEntity<String> handleChangePassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
         authService.handleSendPassword(resetPasswordDTO);
         return ResponseEntity.ok("Le mot de passe a été changé avec succès");
     }
+
 }

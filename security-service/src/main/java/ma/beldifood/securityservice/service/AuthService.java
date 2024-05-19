@@ -11,9 +11,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @AllArgsConstructor
 @Service
+@CrossOrigin(origins = "*", exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
@@ -33,6 +35,7 @@ public class AuthService {
                         .refreshToken(jwtHelper.generateToken(user,JwtHelpers.REFRESH_TOKEN_EXPIRATION_MS))
                         .login(request.getLogin())
                         .role(user.getRole())
+                        .user(user)
                         .build();
             } else {
                 throw new WrongCredentialsException(" Invalid credentials");

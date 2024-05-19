@@ -59,8 +59,8 @@ public class MailService implements IMailService {
                         "<body>" +
                         "<h2>Dear "+ user.getFirstName() + ",</h2>"
                         + "<br/> We have sent you this email in response to your password reset request. " +
-                        " <br/> To reset your password, please follow the link below:  "
-                        + "<a href="+site_address+"/auth/reset-password?token="+user.getResetPasswordToken()+">Reset Password</a>" +
+                        " <br/> To reset your password, Here is the code :  "
+                        + user.getResetPasswordToken()+" to Reset your Password</a>" +
                         "<br/> Regards,<br/>" +
                         "BeldiFood Team" +
                         "</body>" +
