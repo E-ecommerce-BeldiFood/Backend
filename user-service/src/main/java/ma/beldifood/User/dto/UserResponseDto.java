@@ -23,6 +23,7 @@ public class UserResponseDto {
     private Role role;
     private String phone;
     private Status status;
+    private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Date confirmedAt;

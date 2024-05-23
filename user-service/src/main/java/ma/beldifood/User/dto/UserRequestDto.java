@@ -21,6 +21,7 @@ public class UserRequestDto {
     private Role role;
     private boolean active = true;
     private String phone;
+    private String address;
     private String confirmationToken;
     private String resetPasswordToken;
 }

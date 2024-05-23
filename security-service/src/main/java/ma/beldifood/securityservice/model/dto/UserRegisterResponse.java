@@ -20,6 +20,7 @@ public class UserRegisterResponse {
     private String email;
     private String role;
     private String phone;
+    private String address;
     private LocalDateTime createdAt;
     private Status status;
     private LocalDateTime updatedAt;

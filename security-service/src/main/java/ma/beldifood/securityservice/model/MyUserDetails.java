@@ -22,6 +22,7 @@ public class MyUserDetails implements UserDetails {
     private String role;
     private boolean active;
     private Status status;
+    private String address;
 
     public MyUserDetails(UserDto userDto){
         this.userName=userDto.getUserName();
@@ -29,6 +30,7 @@ public class MyUserDetails implements UserDetails {
         this.role=userDto.getRole();
         this.active=userDto.isActive();
         this.status=userDto.getStatus();
+        this.address=userDto.getAddress();
     }
 
     @Override

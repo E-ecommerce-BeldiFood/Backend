@@ -8,6 +8,7 @@ import ma.beldifood.User.dto.UserRequestDto;
 import ma.beldifood.User.dto.UserResponseDto;
 import ma.beldifood.User.entities.User;
 import ma.beldifood.User.exception.EmailAlreadyExistsException;
+import ma.beldifood.User.exception.EmptyEntityException;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -19,12 +20,14 @@ public interface UserService {
     public UserResponseDto getUserByUserName(String userName) throws EntityNotFoundException;
     UserResponseDto getUserByEmail(String email) throws EntityNotFoundException;
     public void deleteUserById(Long id) throws EntityNotFoundException;
+    public void enableUser(Long id) throws EntityNotFoundException, EmptyEntityException;
+    public List<UserResponseDto> getDisabledUsers();
+
     public UserResponseDto updateUser( UserRequestDto userDto) throws EntityNotFoundException;
-
     public User getUserByLogin(String login) throws EntityNotFoundException;
-
     boolean confirmEmail(String confirmationToken);
     void sendResetPasswordMail(@NotNull String email) throws MessagingException;
     void resetPassword(ResetPasswordDTO dto);
+
 }
 

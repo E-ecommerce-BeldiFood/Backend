@@ -45,6 +45,7 @@ public class UserSeeder {
                 .status(Status.ENABLED)
                 .password(passwordEncoder.encode(password))
                 .phone(phone)
+                .address("test test 12 test ")
                 .build();
         return new CommandLineRunner() {
             @Override

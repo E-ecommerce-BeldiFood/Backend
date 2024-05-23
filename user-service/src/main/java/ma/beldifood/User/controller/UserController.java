@@ -63,7 +63,21 @@ public class UserController {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/admin")
+
+    @PutMapping("/admin/{id}")
+    public ResponseEntity<Void> enableUser(@PathVariable Long id) {
+        userService.enableUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/disabled-users/admin")
+    public ResponseEntity<List<UserResponseDto>> getDisabledUsers() {
+        List<UserResponseDto> disabledUsers = userService.getDisabledUsers();
+        return ResponseEntity.ok(disabledUsers);
+    }
+
+    @PutMapping("/user")
     public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserRequestDto userDto) {
         UserResponseDto updatedUser = userService.updateUser(userDto);
         return ResponseEntity.ok(updatedUser);

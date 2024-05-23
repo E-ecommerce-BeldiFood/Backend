@@ -26,6 +26,11 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false, updatable = false)
     private String email;
+
+
+
+    private String address;
+
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean active;

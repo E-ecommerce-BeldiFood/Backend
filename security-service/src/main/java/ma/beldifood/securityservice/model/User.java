@@ -13,6 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String password;
+    private String address;
     private String email;
     private String role;
     private boolean active=false;

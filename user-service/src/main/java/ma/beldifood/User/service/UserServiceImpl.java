@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService{
         User user = Mapping.mapToUserEntity(userDto);
         user.setActive(false);
         user.setStatus(Status.ENABLED);
+        user.setAddress(user.getAddress());
         user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String code = UUID.randomUUID().toString();
@@ -108,26 +109,50 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void deleteUserById(Long id) throws EntityNotFoundException, EmptyEntityException{
-        log.info("delete user by id : {}", id); // Logging the deletion operation
+    public void deleteUserById(Long id) throws EntityNotFoundException, EmptyEntityException {
+        log.info("Disabling user by id : {}", id); // Logging the disable operation
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setStatus(Status.DISABLED); // Deactivate the user instead of deleting
             userRepository.save(user); // Update the user entity
-        } else  throw new EntityNotFoundException("User not found with id: " + id);
+        } else {
+            throw new EntityNotFoundException("User not found with id: " + id);
+        }
+    }
 
+   @Override
+    public void enableUser(Long id) throws EntityNotFoundException, EmptyEntityException {
+        log.info("Enabling user by id : {}", id); // Logging the enable operation
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setStatus(Status.ENABLED); // Enable the user
+            userRepository.save(user); // Update the user entity
+        } else {
+            throw new EntityNotFoundException("User not found with id: " + id);
+        }
+    }
+
+    @Override
+    public List<UserResponseDto> getDisabledUsers() {
+        log.info("Fetching all disabled users");
+        List<User> disabledUsers = userRepository.findByStatus(Status.DISABLED);
+        if (disabledUsers.isEmpty()) {
+            throw new EntityNotFoundException("No disabled users found!");
+        }
+        return disabledUsers.stream()
+                .map(Mapping::mapToUserResponseDto)
+                .toList();
     }
 
     @Override
     public UserResponseDto updateUser(UserRequestDto userDto) throws EntityNotFoundException {
         User user = userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userDto.getId()));
-
-
         user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
-
+        user.setAddress(userDto.getAddress());
         User updatedUser = userRepository.save(user);
         return Mapping.mapToUserResponseDto(updatedUser);
 
