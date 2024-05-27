@@ -11,15 +11,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
-   
+
+    void massDeleteProducts(List<Long> id);
+    List<ProductDtoResponse> searchProductsByName(String name);
     public ProductDtoResponse getProductById(Long id);
     //public ProductDtoResponse createProduct(ProductDtoRequest productDto, MultipartFile file);
-    ProductDtoResponse createProduct(ProductDtoRequest productDto);
+//    ProductDtoResponse createProduct(ProductDtoRequest productDto);
+    public ProductDtoResponse createProduct(ProductDtoRequest productDto, MultipartFile file);
     public void deleteProduct(Long id);
 
     Page<ProductDtoResponse> findProductsWithPaginationAndSorting(int pageNumber, int pageSize, String field, String order);
 
-    public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest);
+    public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest, MultipartFile productImage);
 
     List<ProductDtoResponse> getProductsByCategory(Long categoryId);
     List<ProductDtoResponse> getProductsBySubcategory(Long subcategoryId);

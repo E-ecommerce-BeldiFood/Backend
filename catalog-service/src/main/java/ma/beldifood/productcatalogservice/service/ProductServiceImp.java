@@ -46,7 +46,7 @@ public class ProductServiceImp implements ProductService{
         return Mapping.mapToProductReviewDto(product, reviews);
     }
 
-    /*public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile file) {
+    public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest, MultipartFile file) {
         Product product = Mapping.mapToProduct(productDtoRequest);
 
         // Upload image to Firebase Storage and get URL
@@ -60,29 +60,28 @@ public class ProductServiceImp implements ProductService{
 
         return Mapping.mapToProductResponseDto(savedProduct);
     }
-*/
-    public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest) {
-        // Map the ProductDtoRequest to a Product entity
-        Product product = Mapping.mapToProduct(productDtoRequest);
-
-        // Use the provided image URL from the request
-        product.setImageUrl(productDtoRequest.getImageUrl());
-
-        // Retrieve the subcategory by ID and handle the potential NoSuchElementException
-        Long subcategoryId = productDtoRequest.getSubcategoryId();
-        if (subcategoryId == null) {
-            throw new IllegalArgumentException("Subcategory ID cannot be null");
-        }
-        Subcategory subcategory = subcategoryRepository.findById(subcategoryId)
-                .orElseThrow(() -> new NoSuchElementException("Subcategory not found with id: " + subcategoryId));
-        product.setSubcategory(subcategory);
-
-        // Save the product entity to the database
-        Product savedProduct = productRepository.save(product);
-
-        // Map the saved Product entity to a ProductDtoResponse and return it
-        return Mapping.mapToProductResponseDto(savedProduct);
-    }
+//    public ProductDtoResponse createProduct(ProductDtoRequest productDtoRequest) {
+//        // Map the ProductDtoRequest to a Product entity
+//        Product product = Mapping.mapToProduct(productDtoRequest);
+//
+//        // Use the provided image URL from the request
+//        product.setImageUrl(productDtoRequest.getImageUrl());
+//
+//        // Retrieve the subcategory by ID and handle the potential NoSuchElementException
+//        Long subcategoryId = productDtoRequest.getSubcategoryId();
+//        if (subcategoryId == null) {
+//            throw new IllegalArgumentException("Subcategory ID cannot be null");
+//        }
+//        Subcategory subcategory = subcategoryRepository.findById(subcategoryId)
+//                .orElseThrow(() -> new NoSuchElementException("Subcategory not found with id: " + subcategoryId));
+//        product.setSubcategory(subcategory);
+//
+//        // Save the product entity to the database
+//        Product savedProduct = productRepository.save(product);
+//
+//        // Map the saved Product entity to a ProductDtoResponse and return it
+//        return Mapping.mapToProductResponseDto(savedProduct);
+//    }
 
 
     public ProductDtoResponse getProductById(Long id) {
@@ -97,17 +96,7 @@ public class ProductServiceImp implements ProductService{
 
 
 
-    //    public Page<ProductDtoResponse> getAllProducts(int pageNumber, int pageSize, String field, String order) {
-//        PageRequest pageRequest = PageRequest.of(
-//                pageNumber,
-//                pageSize,
-//                Sort.by(order.equalsIgnoreCase("desc")?
-//                        Sort.Direction.DESC:
-//                        Sort.Direction.ASC,
-//                        field)
-//        );
-//        return ProductDtoResponse.findAll(pageRequest).map(Mapping::mapToProductResponseDto);
-//    }
+
         @Override
     public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(int pageNumber, int pageSize, String field, String order) {
         PageRequest pageRequest = PageRequest.of(
@@ -130,34 +119,34 @@ public class ProductServiceImp implements ProductService{
         return products.stream().map(Mapping::mapToProductResponseDto).collect(Collectors.toList());
     }
 
-//    public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest, MultipartFile file) {
-//        Product existingProduct = productRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
-//
-//        existingProduct.setName(productDtoRequest.getName());
-//        existingProduct.setPrice(productDtoRequest.getPrice());
-//        existingProduct.setDescription(productDtoRequest.getDescription());
-//
-//        // Update image if provided
-//        if (file != null) {
-//            String imageUrl = firebaseStorageService.upload(file);
-//            existingProduct.setImageUrl(imageUrl);
-//        }
-//
-//        Product updatedProduct = productRepository.save(existingProduct);
-//        return Mapping.mapToProductResponseDto(updatedProduct);
-//    }
-public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest) {
-    Product existingProduct = productRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
-    existingProduct.setName(productDtoRequest.getName());
-    existingProduct.setPrice(productDtoRequest.getPrice());
-    existingProduct.setDescription(productDtoRequest.getDescription());
-    existingProduct.setImageUrl(productDtoRequest.getImageUrl());
-    existingProduct.setStatus(productDtoRequest.getStatus());
-    Product updatedProduct = productRepository.save(existingProduct);
-    return Mapping.mapToProductResponseDto(updatedProduct);
-}
+    public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest, MultipartFile file) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+
+        existingProduct.setName(productDtoRequest.getName());
+        existingProduct.setPrice(productDtoRequest.getPrice());
+        existingProduct.setDescription(productDtoRequest.getDescription());
+
+        // Update image if provided
+        if (file != null) {
+            String imageUrl = firebaseStorageService.upload(file);
+            existingProduct.setImageUrl(imageUrl);
+        }
+
+        Product updatedProduct = productRepository.save(existingProduct);
+        return Mapping.mapToProductResponseDto(updatedProduct);
+    }
+//public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest) {
+//    Product existingProduct = productRepository.findById(id)
+//            .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+//    existingProduct.setName(productDtoRequest.getName());
+//    existingProduct.setPrice(productDtoRequest.getPrice());
+//    existingProduct.setDescription(productDtoRequest.getDescription());
+////    existingProduct.setImageUrl(productDtoRequest.getImageUrl());
+//    existingProduct.setStatus(productDtoRequest.getStatus());
+//    Product updatedProduct = productRepository.save(existingProduct);
+//    return Mapping.mapToProductResponseDto(updatedProduct);
+//}
 
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
@@ -179,22 +168,21 @@ public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoReq
                 .toList();
     }
 
+    @Override
+    public void massDeleteProducts(List<Long> id) {
+        List<Product> productsToDelete = productRepository.findAllById(id);
+        productRepository.deleteAll(productsToDelete);
+    }
 
 
 
-
-//    @Override
-//    public Page<ProductDtoResponse> findProductsWithPaginationAndSorting(Integer offset, Integer pageSize, String field) {
-//        Pageable pageable= PageRequest.of(offset, pageSize, Sort.by(field));
-//
-//        Page<Product> products = productRepository.findAll(pageable);
-//
-//
-//        return products.map(Mapping::mapToProductResponseDto);
-//
-//    }
-
-
+    @Override
+    public List<ProductDtoResponse> searchProductsByName(String name) {
+        List<Product> products = productRepository.findByNameContainingIgnoreCase(name);
+        return products.stream()
+                .map(Mapping::mapToProductResponseDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<ProductDtoResponse> searchProducts(String query) {

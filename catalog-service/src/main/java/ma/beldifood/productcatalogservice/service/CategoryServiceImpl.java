@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import ma.beldifood.productcatalogservice.entity.Category;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.CategoryRequestDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.CategoryResponseDto;
+import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.repository.CategoryRepository;
 import ma.beldifood.productcatalogservice.repository.SubcategoryRepository;
 import ma.beldifood.productcatalogservice.utils.Mapping;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -20,6 +22,18 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final SubcategoryRepository subcategoryRepository;
 
+    @Override
+    public void massDeleteCategory(List<Long> id) {
+        List<Category> categoriesToDelete = categoryRepository.findAllById(id);
+        categoryRepository.deleteAll(categoriesToDelete);
+    }
+    @Override
+    public List<CategoryResponseDto> searchCategoryByName(String name) {
+        List<Category> categories = categoryRepository.findByNameContainingIgnoreCase(name);
+        return categories.stream()
+                .map(Mapping::mapToCategoryResponseDto)
+                .collect(Collectors.toList());
+    }
     @Override
     public List<CategoryResponseDto> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();

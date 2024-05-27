@@ -2,6 +2,7 @@ package ma.beldifood.productcatalogservice.controller;
 
 import jakarta.transaction.Transactional;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.SubcategoryRequestDto;
+import ma.beldifood.productcatalogservice.entity.DtoResponse.CategoryResponseDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.SubcategoryResponseDto;
 import ma.beldifood.productcatalogservice.service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,19 @@ public class SubcategoryController {
         this.subcategoryService = subcategoryService;
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<SubcategoryResponseDto>> searchProductsByName(@RequestParam("name") String name) {
+        List<SubcategoryResponseDto> subcategories = subcategoryService.searchSubCategoryByName(name);
+        return ResponseEntity.ok(subcategories);
+    }
+
+
+
+    @DeleteMapping("/mass-delete")
+    public ResponseEntity<Void> massDeleteSubCategories(@RequestBody List<Long> id) {
+        subcategoryService.massDeleteSubCategory(id);
+        return ResponseEntity.noContent().build();
+    }
     @GetMapping
     public ResponseEntity<List<SubcategoryResponseDto>> getAllSubcategories() {
         List<SubcategoryResponseDto> subcategories = subcategoryService.getAllSubcategories();

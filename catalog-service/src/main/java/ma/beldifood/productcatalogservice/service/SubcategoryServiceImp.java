@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import ma.beldifood.productcatalogservice.entity.Category;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.SubcategoryRequestDto;
+import ma.beldifood.productcatalogservice.entity.DtoResponse.CategoryResponseDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.SubcategoryResponseDto;
 import ma.beldifood.productcatalogservice.entity.Subcategory;
 import ma.beldifood.productcatalogservice.repository.CategoryRepository;
@@ -25,6 +26,18 @@ public class SubcategoryServiceImp implements  SubcategoryService{
     private final CategoryRepository categoryRepository;
     private final CategoryService categoryService;
 
+    @Override
+    public void massDeleteSubCategory(List<Long> id) {
+        List<Subcategory> subcategoriesToDelete = subcategoryRepository.findAllById(id);
+        subcategoryRepository.deleteAll(subcategoriesToDelete);
+    }
+    @Override
+    public List<SubcategoryResponseDto> searchSubCategoryByName(String name) {
+        List<Subcategory> subcategories = subcategoryRepository.findByNameContainingIgnoreCase(name);
+        return subcategories.stream()
+                .map(Mapping::mapToSubcategoryResponseDto)
+                .collect(Collectors.toList());
+    }
     @Override
     public List<SubcategoryResponseDto> getAllSubcategories() {
         List<Subcategory> subcategories = subcategoryRepository.findAll();

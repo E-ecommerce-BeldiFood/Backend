@@ -74,6 +74,7 @@ public class Mapping {
         orderItemResponse.setName(orderItem.getName());
         orderItemResponse.setPrice(orderItem.getPrice());
         orderItemResponse.setImageUrl(orderItem.getImageUrl());
+        orderItemResponse.setDescription(orderItem.getDescription());
         orderItemResponse.setQuantity(orderItem.getQuantity());
         return orderItemResponse;
     }

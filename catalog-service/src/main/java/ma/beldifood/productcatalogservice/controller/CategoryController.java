@@ -3,6 +3,7 @@ package ma.beldifood.productcatalogservice.controller;
 import jakarta.transaction.Transactional;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.CategoryRequestDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.CategoryResponseDto;
+import ma.beldifood.productcatalogservice.entity.DtoResponse.ProductDtoResponse;
 import ma.beldifood.productcatalogservice.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,19 @@ public class CategoryController {
             return ResponseEntity.ok(categories);
 
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<CategoryResponseDto>> searchProductsByName(@RequestParam("name") String name) {
+        List<CategoryResponseDto> categories = categoryService.searchCategoryByName(name);
+        return ResponseEntity.ok(categories);
+    }
 
+
+
+    @DeleteMapping("/mass-delete")
+    public ResponseEntity<Void> massDeleteCategory(@RequestBody List<Long> id) {
+        categoryService.massDeleteCategory(id);
+        return ResponseEntity.noContent().build();
+    }
     @PostMapping
     public ResponseEntity<CategoryResponseDto> createCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         CategoryResponseDto createdCategory = categoryService.createCategory(categoryRequestDto);

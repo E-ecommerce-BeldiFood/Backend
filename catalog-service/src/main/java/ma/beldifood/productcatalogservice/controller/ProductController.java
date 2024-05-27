@@ -44,18 +44,14 @@ public class ProductController {
         }
     }
 
-   /* @PostMapping
+    @PostMapping
     public ResponseEntity<ProductDtoResponse> createProduct(@RequestParam("product") String  productDtoRequestString, @RequestParam("productImage") MultipartFile productImage) throws JsonProcessingException {
         ProductDtoRequest productDtoRequest = objectMapper.readValue(productDtoRequestString, ProductDtoRequest.class);
         ProductDtoResponse product = productService.createProduct(productDtoRequest, productImage);
         //  ProductDtoResponse createdProduct = productService.createProduct(productDtoRequest);
         return ResponseEntity.ok(product);
-    }*/
-   @PostMapping
-   public ResponseEntity<ProductDtoResponse> createProduct( @RequestBody ProductDtoRequest productDtoRequest) {
-       ProductDtoResponse productDtoResponse = productService.createProduct(productDtoRequest);
-       return ResponseEntity.ok(productDtoResponse);
-   }
+    }
+
 
 
     @GetMapping("/{id}")
@@ -72,18 +68,14 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<ProductDtoResponse> updateProduct(@PathVariable Long id, @RequestParam("product") String  productDtoRequestString, @RequestParam("productImage") MultipartFile productImage ) throws JsonProcessingException {
-//        ProductDtoRequest productDtoRequest = objectMapper.readValue(productDtoRequestString, ProductDtoRequest.class);
-//
-//        ProductDtoResponse updatedProduct = productService.updateProduct(id, productDtoRequest, productImage);
-//        return ResponseEntity.ok(updatedProduct);
-//    }
-@PutMapping("/{id}")
-public ResponseEntity<ProductDtoResponse> updateProduct(@PathVariable Long id, @RequestBody ProductDtoRequest productDtoRequest) throws JsonProcessingException {
-    ProductDtoResponse updatedProduct = productService.updateProduct(id, productDtoRequest);
-    return ResponseEntity.ok(updatedProduct);
-}
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDtoResponse> updateProduct(@PathVariable Long id, @RequestParam("product") String  productDtoRequestString, @RequestParam("productImage") MultipartFile productImage ) throws JsonProcessingException {
+        ProductDtoRequest productDtoRequest = objectMapper.readValue(productDtoRequestString, ProductDtoRequest.class);
+
+        ProductDtoResponse updatedProduct = productService.updateProduct(id, productDtoRequest, productImage);
+        return ResponseEntity.ok(updatedProduct);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
@@ -118,14 +110,19 @@ public ResponseEntity<ProductDtoResponse> updateProduct(@PathVariable Long id, @
     }
 
     @GetMapping("/search")
-    private ResponseEntity<List<ProductDtoResponse>> searchProducts(
-            @RequestParam("query") String query) throws NotFoundException {
-        List<ProductDtoResponse> allProducts = productService.searchProducts(query);
-        if (allProducts.isEmpty()) {
-            throw new NotFoundException("No product Found!!");
-        }
-        return ResponseEntity.ok(allProducts);
+    public ResponseEntity<List<ProductDtoResponse>> searchProductsByName(@RequestParam("name") String name) {
+        List<ProductDtoResponse> products = productService.searchProductsByName(name);
+        return ResponseEntity.ok(products);
     }
+
+
+
+    @DeleteMapping("/mass-delete")
+    public ResponseEntity<Void> massDeleteProducts(@RequestBody List<Long> id) {
+        productService.massDeleteProducts(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/pagination")
     ResponseEntity<Page<ProductDtoResponse>> getProductsWithPagination(@RequestParam("pageNumber") int pageNumber,
                                                                @RequestParam("pageSize") int pageSize,

@@ -24,4 +24,6 @@ public interface OrderService {
     OrderResponse updateOrder(long orderId, @Valid OrderRequest orderRequest);
 
     void updateOrderStatus(Long orderId, OrderStatus newStatus);
+
+    
 }
