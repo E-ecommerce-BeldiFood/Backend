@@ -15,18 +15,11 @@ import java.util.regex.Pattern;
 public class ConfigRole {
     private final JwtUtil jwtUtils;
 
-    public boolean filtersRoles(String token, String path) {
+   public boolean filtersRoles(String token, String path) {
         log.info("ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù");
         Claims claims = jwtUtils.getAllClaimsFromToken(token);
         //plm
         String iss = claims.get("iss", String.class);
-        /*Pattern pattern = Pattern.compile("role=(\\w+)");
-        Matcher matcher = pattern.matcher(iss);
-        List<String> roles = new ArrayList<>();
-        while (matcher.find()) {
-            String role = matcher.group(1);
-            roles.add(role);
-        }*/
         if (iss==null) return false;
         if (iss.contains("ADMIN")) return true;
         if (iss.contains("USER") ) {
@@ -36,6 +29,6 @@ public class ConfigRole {
             return true;
         }
         return false;
-}
+   }
 
 }

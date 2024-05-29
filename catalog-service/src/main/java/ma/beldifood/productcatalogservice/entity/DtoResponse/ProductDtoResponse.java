@@ -28,7 +28,4 @@ public class ProductDtoResponse  {
     private STATUS status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
-
-
 }

@@ -5,9 +5,12 @@ import lombok.RequiredArgsConstructor;
 import ma.beldifood.productcatalogservice.entity.Category;
 import ma.beldifood.productcatalogservice.entity.DtoRequest.CategoryRequestDto;
 import ma.beldifood.productcatalogservice.entity.DtoResponse.CategoryResponseDto;
+import ma.beldifood.productcatalogservice.entity.Product;
+import ma.beldifood.productcatalogservice.entity.Subcategory;
 import ma.beldifood.productcatalogservice.repository.CategoryRepository;
 import ma.beldifood.productcatalogservice.utils.Mapping;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,6 +20,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final FirebaseStorageService firebaseStorageService;
 
     @Override
     public List<CategoryResponseDto> getAllCategories() {
@@ -27,10 +31,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto) {
+    public CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto, MultipartFile file) {
         Category category =Mapping.mapToCategory(categoryRequestDto);
+        String imageUrl = firebaseStorageService.upload(file);
+        category.setImageUrl(imageUrl);
+
         Category savedCategory = categoryRepository.save(category);
         return Mapping.mapToCategoryResponseDto(savedCategory);
+
     }
 
     @Override

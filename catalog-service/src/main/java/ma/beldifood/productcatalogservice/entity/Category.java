@@ -17,7 +17,8 @@ public class Category {
 
     @NotBlank
     private String name;
-
+    @NotBlank(message = "Image URL is required")
+    private String imageUrl;
     @ToString.Exclude
     @OneToMany(mappedBy = "category")
     private List<Subcategory> subcategories;

@@ -1,15 +1,13 @@
 package ma.beldifood.User.dto;
 
+import lombok.*;
 import ma.beldifood.User.entities.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 public class UserRequestDto {
 
     private  Long id;

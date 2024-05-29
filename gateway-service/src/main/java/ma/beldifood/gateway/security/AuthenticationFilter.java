@@ -1,5 +1,6 @@
 package ma.beldifood.gateway.security;
 
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,8 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Slf4j
 @RefreshScope
@@ -32,13 +35,20 @@ public class AuthenticationFilter implements GatewayFilter {
         if (routerValidator.isSecured.test(request)) {
             if (authMissing(request)) return onError(exchange);
             String token = request.getHeaders().getOrEmpty("Authorization").get(0);
+            System.out.println("headers size:" + request.getHeaders().getOrEmpty("Authorization").size());
+            System.out.println("raw token: " + token);
             if (token != null && token.startsWith("Bearer ")) token = token.substring(7);
             try {
                 String path=exchange.getRequest().getURI().getPath();
                 if (!configRole.filtersRoles(token, path)) return onError(null);
                 // we use this method to validate token
-                jwtUtil.getAllClaimsFromToken(token);
+
+                    Claims claims = jwtUtil.getAllClaimsFromToken(token);
+                    System.out.println("claim: " + claims.getIssuer());
+
+                System.out.println("token after processing : "+ token);
             } catch (Exception e) {
+                e.printStackTrace();
                 return onError(exchange);
             }
         }
