@@ -33,7 +33,7 @@ public class ProductDtoRequest {
     @NotNull
     private Long subcategoryId;
 
-//    @NotBlank(message = "Image URL is required")
-//    private String imageUrl;
+    @NotBlank(message = "Image URL is required")
+    private String imageUrl;
 
 }

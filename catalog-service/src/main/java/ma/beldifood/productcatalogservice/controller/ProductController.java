@@ -45,12 +45,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDtoResponse> createProduct(@RequestParam("product") String  productDtoRequestString, @RequestParam("productImage") MultipartFile productImage) throws JsonProcessingException {
-        ProductDtoRequest productDtoRequest = objectMapper.readValue(productDtoRequestString, ProductDtoRequest.class);
-        ProductDtoResponse product = productService.createProduct(productDtoRequest, productImage);
-        //  ProductDtoResponse createdProduct = productService.createProduct(productDtoRequest);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ProductDtoResponse> createProduct( @RequestBody ProductDtoRequest productDtoRequest) {
+        ProductDtoResponse productDtoResponse = productService.createProduct(productDtoRequest);
+        return ResponseEntity.ok(productDtoResponse);
     }
+
+//
 
 
 
@@ -70,10 +70,8 @@ public class ProductController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDtoResponse> updateProduct(@PathVariable Long id, @RequestParam("product") String  productDtoRequestString, @RequestParam("productImage") MultipartFile productImage ) throws JsonProcessingException {
-        ProductDtoRequest productDtoRequest = objectMapper.readValue(productDtoRequestString, ProductDtoRequest.class);
-
-        ProductDtoResponse updatedProduct = productService.updateProduct(id, productDtoRequest, productImage);
+    public ResponseEntity<ProductDtoResponse> updateProduct(@PathVariable Long id, @RequestBody ProductDtoRequest productDtoRequest) throws JsonProcessingException {
+        ProductDtoResponse updatedProduct = productService.updateProduct(id, productDtoRequest);
         return ResponseEntity.ok(updatedProduct);
     }
 

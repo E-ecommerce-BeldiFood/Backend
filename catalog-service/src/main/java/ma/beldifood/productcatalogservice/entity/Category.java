@@ -17,6 +17,7 @@ public class Category {
 
     @NotBlank
     private String name;
+    private String imageUrl;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "category")

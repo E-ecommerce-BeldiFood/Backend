@@ -7,4 +7,5 @@ import lombok.Data;
 public class CategoryRequestDto {
     @NotBlank(message = "Name is required")
     private String name;
+    private String imageUrl;
 }

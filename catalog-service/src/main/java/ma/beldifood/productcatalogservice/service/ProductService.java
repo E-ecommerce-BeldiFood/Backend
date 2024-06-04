@@ -17,12 +17,13 @@ public interface ProductService {
     public ProductDtoResponse getProductById(Long id);
     //public ProductDtoResponse createProduct(ProductDtoRequest productDto, MultipartFile file);
 //    ProductDtoResponse createProduct(ProductDtoRequest productDto);
-    public ProductDtoResponse createProduct(ProductDtoRequest productDto, MultipartFile file);
+//    public ProductDtoResponse createProduct(ProductDtoRequest productDto, MultipartFile file);
+    ProductDtoResponse createProduct(ProductDtoRequest productDto);
     public void deleteProduct(Long id);
 
     Page<ProductDtoResponse> findProductsWithPaginationAndSorting(int pageNumber, int pageSize, String field, String order);
 
-    public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest, MultipartFile productImage);
+    public ProductDtoResponse updateProduct(Long id, ProductDtoRequest productDtoRequest);
 
     List<ProductDtoResponse> getProductsByCategory(Long categoryId);
     List<ProductDtoResponse> getProductsBySubcategory(Long subcategoryId);
